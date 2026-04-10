@@ -1566,16 +1566,131 @@ function toggleFaq(btn) {
 }
 
 // ── CONTACT SUBMIT ──
-function handleSubmit() {
-  var alertMsg = {
-    ko: '문의가 접수되었습니다. 담당자가 확인 후 연락드리겠습니다. 감사합니다.',
-    en: 'Your inquiry has been received. Our team will get back to you shortly. Thank you.',
-    zh: '您的咨询已收到。我们的负责人将尽快与您联系。谢谢！'
+// ================================================================
+// 나이스디앤비 ESG Landing Page — Contact Us 폼 제출 코드
+// ================================================================
+// 사용 방법:
+//   1. Apps Script 배포 후 받은 URL을 SCRIPT_URL에 붙여넣기
+//   2. 랜딩페이지 HTML에서 기존 handleSubmit() 함수를
+//      아래 코드로 교체
+// ================================================================
+
+// ★ Apps Script 배포 URL을 여기에 붙여넣기
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbys4utZ50NC_P_3WDcMFyrodEqdahQqLybKa-gnJ5CjkBAe3XwhPJUkRfLMwOW-odAf/exec';
+
+// ── 다국어 메시지 ──
+const MSG = {
+  ko: {
+    success : '문의가 접수되었습니다.\n담당자가 확인 후 빠르게 연락드리겠습니다. 감사합니다.',
+    error   : '전송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.',
+    required: '필수 항목을 모두 입력해 주세요.',
+    sending : '전송 중...',
+    submit  : '제출하기',
+  },
+  en: {
+    success : 'Your inquiry has been received.\nOur team will get back to you shortly. Thank you.',
+    error   : 'An error occurred. Please try again later.',
+    required: 'Please fill in all required fields.',
+    sending : 'Sending...',
+    submit  : 'Submit',
+  },
+  zh: {
+    success : '您的咨询已收到。\n我们的负责人将尽快与您联系。谢谢！',
+    error   : '发生错误，请稍后重试。',
+    required: '请填写所有必填项。',
+    sending : '发送中...',
+    submit  : '提交',
+  },
+};
+
+// ── 폼 필드 수집 ──
+function collectFormData() {
+  const inputs = document.querySelectorAll('#page-contact .form-input');
+
+  // data-ph 속성으로 각 필드를 구분
+  const get = (ph) => {
+    const el = document.querySelector(`[data-ph="${ph}"]`);
+    return el ? el.value.trim() : '';
   };
-  var lang = window._lang || 'ko';
-  alert(alertMsg[lang] || alertMsg['ko']);
-  return;
+
+  // 국가 select — 선택된 option의 data-ko 값을 우선 사용 (항상 한글 저장)
+  const countryEl = document.getElementById('country-select');
+  let country = '';
+  if (countryEl && countryEl.selectedIndex > 0) {
+    const opt = countryEl.options[countryEl.selectedIndex];
+    country = opt.getAttribute('data-ko') || opt.value || opt.text;
+  }
+
+  return {
+    company : get('ph-co'),
+    name    : get('ph-nm'),
+    email   : get('ph-em'),
+    phone   : get('ph-ph'),
+    country,
+    subject : get('ph-su'),
+    msg     : get('ph-ms'),
+  };
 }
+
+// ── 필수 항목 검증 ──
+function validateForm(data) {
+  return data.company && data.name && data.email && data.country && data.subject && data.msg;
+}
+
+// ── 폼 초기화 ──
+function resetForm() {
+  document.querySelectorAll('#page-contact .form-input').forEach(el => {
+    if (el.tagName === 'SELECT') {
+      el.selectedIndex = 0;
+    } else {
+      el.value = '';
+    }
+  });
+}
+
+// ── 제출 버튼 상태 토글 ──
+function setSubmitState(loading) {
+  const btn  = document.querySelector('#page-contact .submit-btn');
+  const span = btn ? btn.querySelector('[data-t="btn-submit"]') : null;
+  const lang = window._lang || 'ko';
+  if (!btn || !span) return;
+  btn.disabled = loading;
+  btn.style.opacity = loading ? '0.7' : '1';
+  span.textContent  = loading ? MSG[lang].sending : MSG[lang].submit;
+}
+
+// ── 메인 제출 핸들러 (기존 handleSubmit 교체) ──
+function handleSubmit() {
+  const lang = window._lang || 'ko';
+  const m    = MSG[lang] || MSG.ko;
+  const data = collectFormData();
+
+  if (!validateForm(data)) {
+    alert(m.required);
+    return;
+  }
+
+  setSubmitState(true);
+
+  fetch(SCRIPT_URL, {
+    method : 'POST',
+    // Apps Script는 Content-Type: application/json 시 preflight 발생 → text/plain 사용
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body   : JSON.stringify(data),
+  })
+    .then(res => res.json())
+    .then(json => {
+      if (json.success) {
+        alert(m.success);
+        resetForm();
+      } else {
+        alert(m.error + '\n' + (json.error || ''));
+      }
+    })
+    .catch(() => alert(m.error))
+    .finally(() => setSubmitState(false));
+}
+
 
 // ── FADE-IN TIMELINE ──
 function initTimeline() {
