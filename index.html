@@ -1682,14 +1682,6 @@ function handleSubmit() {
       alert(m.success);
       resetForm();
     })
-    .then(json => {
-      if (json.success) {
-        alert(m.success);
-        resetForm();
-      } else {
-        alert(m.error + '\n' + (json.error || ''));
-      }
-    })
     .catch(() => alert(m.error))
     .finally(() => setSubmitState(false));
 }
