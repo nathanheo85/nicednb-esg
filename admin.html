@@ -1156,6 +1156,9 @@
     <!-- CONTENT -->
     <div class="content-body">
 
+      <!-- ── 문의 관리 페이지 ── -->
+      <div id="page-inquiry">
+
       <!-- STATS -->
       <div class="stats-row">
         <div class="stat-card accent">
@@ -1258,6 +1261,75 @@
         <div class="pagination-btns" id="pg-btns"></div>
       </div>
 
+      </div><!-- /page-inquiry -->
+
+      <!-- ── 대시보드 페이지 ── -->
+      <div id="page-dashboard" style="display:none; flex:1; overflow-y:auto; padding-bottom:24px;">
+        <div class="db-grid">
+
+          <!-- 국가별 분포 -->
+          <div class="db-card">
+            <div class="card-header">
+              <div class="card-header-text">
+                <div class="card-label">국가별 분포</div>
+                <div class="card-title">문의 접수 국가 Top 8</div>
+              </div>
+            </div>
+            <div class="legend-row">
+              <span class="legend-item"><span class="legend-dot" style="background:#02227a"></span>대한민국</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#11BBD1"></span>해외</span>
+            </div>
+            <div style="position:relative;width:100%;height:280px;">
+              <canvas id="countryChart" role="img" aria-label="국가별 문의 건수 가로 바 차트" style="cursor:pointer;"></canvas>
+            </div>
+          </div>
+
+          <!-- 처리 현황 -->
+          <div class="db-card">
+            <div class="card-header">
+              <div class="card-header-text">
+                <div class="card-label">처리 현황</div>
+                <div class="card-title">상태별 건수</div>
+              </div>
+            </div>
+            <div class="funnel-wrap" id="funnel-wrap"></div>
+            <div class="avg-badge">
+              <div class="avg-item">
+                <span class="avg-item-label">평균 처리 소요일</span>
+                <span class="avg-item-value">3.2일</span>
+              </div>
+              <div class="avg-divider"></div>
+              <div class="avg-item">
+                <span class="avg-item-label">완료율</span>
+                <span class="avg-item-value">71%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 월별 추이 -->
+          <div class="db-card db-card-full">
+            <div class="card-header">
+              <div class="card-header-text">
+                <div class="card-label">월별 접수 추이</div>
+                <div class="card-title">최근 6개월 문의 건수</div>
+              </div>
+              <div class="period-btns">
+                <button class="period-btn active" onclick="setPeriod(6,this)">6개월</button>
+                <button class="period-btn" onclick="setPeriod(12,this)">12개월</button>
+              </div>
+            </div>
+            <div class="legend-row">
+              <span class="legend-item"><span class="legend-dot" style="background:#02227a;border-radius:50%"></span>전체 접수</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#11BBD1;border-radius:50%"></span>완료 처리</span>
+            </div>
+            <div style="position:relative;width:100%;height:220px;">
+              <canvas id="trendChart" role="img" aria-label="최근 6개월 월별 문의 접수 및 완료 건수 라인 차트"></canvas>
+            </div>
+          </div>
+
+        </div><!-- /db-grid -->
+      </div><!-- /page-dashboard -->
+
     </div><!-- /content-body -->
   </main>
 </div><!-- /app-shell -->
@@ -1295,7 +1367,7 @@ function handleLogin(){
 ["username","password"].forEach(id=>{document.getElementById(id).addEventListener("input",clearError);});
 
 /* ══ CONFIG ══ */
-const SCRIPT_URL='https://script.google.com/macros/s/AKfycbys4utZ50NC_P_3WDcMFyrodEqdahQqLybKa-gnJ5CjkBAe3XwhPJUkRfLMwOW-odAf/exec';
+const SCRIPT_URL='https://script.google.com/macros/s/여기에_배포_URL_붙여넣기/exec';
 
 /* ══ ADMIN DATA ══ */
 
