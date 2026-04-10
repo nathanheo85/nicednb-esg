@@ -6,9 +6,12 @@
 <title>NICE D&B ESG — Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-#screen-login{display:flex;min-height:100vh;}
-#screen-admin{display:none;}
+/* ── 공통 ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+#screen-login { display: flex; min-height: 100vh; }
+#screen-admin { display: none; }
+
+/* ── 로그인 ── */
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -47,7 +50,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
     padding: 48px 56px;
     position: relative;
     overflow: hidden;
@@ -158,38 +160,11 @@
     letter-spacing: .02em;
   }
 
-  .left-center-logo {
-    position: relative; z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-  }
-  .lc-brand {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 36px;
-    font-weight: 300;
-    color: #fff;
-    letter-spacing: .08em;
-  }
-  .lc-divider {
-    width: 48px; height: 3px;
-    background: var(--cyan);
-    border-radius: 2px;
-    margin: 18px 0 16px;
-  }
-  .lc-sub {
-    font-size: 13px; font-weight: 600;
-    letter-spacing: .20em;
-    color: rgba(255,255,255,.40);
-  }
   .left-footer {
     position: relative; z-index: 1;
     font-size: 11px;
     color: rgba(255,255,255,.22);
     letter-spacing: .04em;
-    text-align: center;
   }
 
   /* ── RIGHT PANEL (LOGIN FORM) ── */
@@ -430,6 +405,8 @@
     .right-panel { padding: 40px 28px; }
   }
 
+
+/* ── 어드민 ── */
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -959,147 +936,106 @@
   ::-webkit-scrollbar-thumb { background: rgba(2,34,122,0.15); border-radius: 10px; }
   ::-webkit-scrollbar-thumb:hover { background: rgba(2,34,122,0.25); }
 
-  .db-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;padding:0 0 24px;}
-  .db-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
-  .db-card-full{grid-column:1/-1;}
-  .card-label{font-size:11px;font-weight:600;color:var(--text-secondary);letter-spacing:.04em;margin-bottom:4px;}
-  .card-title{font-size:15px;font-weight:600;color:var(--text-primary);}
-  .card-header{display:flex;align-items:flex-start;gap:8px;margin-bottom:16px;}
-  .card-header-text{flex:1;}
-  .legend-row{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px;font-size:12px;color:var(--text-secondary);}
-  .legend-item{display:flex;align-items:center;gap:5px;}
-  .legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
-  .funnel-wrap{display:flex;flex-direction:column;gap:10px;margin-top:4px;}
-  .funnel-row{display:flex;align-items:center;gap:12px;}
-  .funnel-label-group{width:120px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:4px;}
-  .funnel-label{font-size:12px;color:var(--text-secondary);}
-  .funnel-count{font-size:12px;font-weight:600;color:var(--brand);}
-  .funnel-bar-wrap{flex:1;background:var(--bg-secondary);border-radius:4px;height:28px;overflow:hidden;}
-  .funnel-bar{height:100%;border-radius:4px;}
-  .funnel-pct{font-size:11px;color:var(--text-tertiary);width:32px;flex-shrink:0;text-align:right;}
-  .avg-badge{display:flex;align-items:center;gap:20px;background:var(--bg-secondary);border-radius:8px;padding:10px 16px;margin-top:14px;}
-  .avg-item{display:flex;flex-direction:column;gap:2px;}
-  .avg-item-label{font-size:11px;color:var(--text-secondary);}
-  .avg-item-value{font-size:20px;font-weight:600;color:var(--brand);}
-  .avg-divider{width:1px;height:32px;background:var(--border-strong);flex-shrink:0;}
-  .period-btns{display:flex;gap:4px;margin-left:auto;}
-  .period-btn{padding:4px 10px;font-size:11px;font-weight:600;font-family:'Noto Sans KR',sans-serif;border:1px solid var(--border-strong);border-radius:6px;background:transparent;color:var(--text-secondary);cursor:pointer;transition:all .12s;}
-  .period-btn.active{background:var(--brand);color:#fff;border-color:var(--brand);}
-  .period-btn:hover:not(.active){background:var(--bg-secondary);}
-  #page-inquiry{display:flex;flex-direction:column;flex:1;min-height:0;gap:16px;}
-  .funnel-row-click{cursor:pointer;border-radius:6px;padding:2px 4px;margin:-2px -4px;transition:background .12s;}
-  .funnel-row-click:hover{background:rgba(2,34,122,0.05);}
-  .funnel-row-click:hover .funnel-count{color:#0a2f99;}
 
+/* ── 대시보드 ── */
+.db-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;padding:0 0 24px;}
+.db-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
+.db-card-full{grid-column:1/-1;}
+.card-label{font-size:11px;font-weight:600;color:var(--text-secondary);letter-spacing:.04em;margin-bottom:4px;}
+.card-title{font-size:15px;font-weight:600;color:var(--text-primary);}
+.card-header{display:flex;align-items:flex-start;gap:8px;margin-bottom:16px;}
+.card-header-text{flex:1;}
+.legend-row{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px;font-size:12px;color:var(--text-secondary);}
+.legend-item{display:flex;align-items:center;gap:5px;}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.funnel-wrap{display:flex;flex-direction:column;gap:10px;margin-top:4px;}
+.funnel-row{display:flex;align-items:center;gap:12px;}
+.funnel-label-group{width:120px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:4px;}
+.funnel-label{font-size:12px;color:var(--text-secondary);}
+.funnel-count{font-size:12px;font-weight:600;color:var(--brand);}
+.funnel-bar-wrap{flex:1;background:var(--bg-secondary);border-radius:4px;height:28px;overflow:hidden;}
+.funnel-bar{height:100%;border-radius:4px;}
+.funnel-pct{font-size:11px;color:var(--text-tertiary);width:32px;flex-shrink:0;text-align:right;}
+.avg-badge{display:flex;align-items:center;gap:20px;background:var(--bg-secondary);border-radius:8px;padding:10px 16px;margin-top:14px;}
+.avg-item{display:flex;flex-direction:column;gap:2px;}
+.avg-item-label{font-size:11px;color:var(--text-secondary);}
+.avg-item-value{font-size:20px;font-weight:600;color:var(--brand);}
+.avg-divider{width:1px;height:32px;background:var(--border-strong);flex-shrink:0;}
+.period-btns{display:flex;gap:4px;margin-left:auto;}
+.period-btn{padding:4px 10px;font-size:11px;font-weight:600;font-family:'Noto Sans KR',sans-serif;border:1px solid var(--border-strong);border-radius:6px;background:transparent;color:var(--text-secondary);cursor:pointer;transition:all .12s;}
+.period-btn.active{background:var(--brand);color:#fff;border-color:var(--brand);}
+.period-btn:hover:not(.active){background:var(--bg-secondary);}
+.funnel-row-click{cursor:pointer;border-radius:6px;padding:2px 4px;margin:-2px -4px;transition:background .12s;}
+.funnel-row-click:hover{background:rgba(2,34,122,0.05);}
+.funnel-row-click:hover .funnel-count{color:#0a2f99;}
 </style>
 </head>
 <body>
+
+<!-- ── 로그인 화면 ── -->
 <div id="screen-login">
-<div class="shell">
-
-  <!-- ── LEFT PANEL ── -->
-  <div class="left-panel">
-    <div class="left-center-logo">
-      <div class="lc-brand">NICE D&amp;B</div>
-      <div class="lc-divider"></div>
-      <div class="lc-sub">ESG ADMIN CONSOLE</div>
+  <div class="shell">
+    <div class="left-panel">
+      <div class="left-center-logo">
+        <div class="lc-brand">NICE D&amp;B</div>
+        <div class="lc-divider"></div>
+        <div class="lc-sub">ESG ADMIN CONSOLE</div>
+      </div>
+      <div class="left-footer">© 2026 NICE D&amp;B Co., Ltd. All rights reserved.</div>
     </div>
-    <div class="left-footer">
-      © 2026 NICE D&amp;B Co., Ltd. All rights reserved.
-    </div>
-  </div>
-
-  <!-- ── RIGHT PANEL ── -->
-  <div class="right-panel">
-    <div class="login-box">
-
-      <div class="login-header">
-        <div class="greeting">관리자 전용 페이지</div>
-        <h1>로그인</h1>
-      </div>
-
-      <div class="access-badge">
-        <span class="access-dot"></span>
-        AUTHORIZED PERSONNEL ONLY
-      </div>
-
-      <!-- 에러 메시지 -->
-      <div class="error-msg" id="error-msg">
-        <span class="error-icon">⚠</span>
-        <span id="error-text">아이디 또는 비밀번호가 올바르지 않습니다.</span>
-      </div>
-
-      <!-- 아이디 -->
-      <div class="form-group">
-        <label class="form-label" for="username">아이디</label>
-        <div class="input-wrap">
-          <span class="input-icon">👤</span>
-          <input
-            class="form-input"
-            id="username"
-            type="text"
-            placeholder="관리자 아이디를 입력하세요"
-            autocomplete="username"
-            onkeydown="handleKeydown(event)"
-          >
+    <div class="right-panel">
+      <div class="login-box">
+        <div class="login-header">
+          <div class="greeting">관리자 전용 페이지</div>
+          <h1>로그인</h1>
+        </div>
+        <div class="access-badge">
+          <span class="access-dot"></span>
+          AUTHORIZED PERSONNEL ONLY
+        </div>
+        <div class="error-msg" id="error-msg">
+          <span class="error-icon">⚠</span>
+          <span id="error-text">아이디 또는 비밀번호가 올바르지 않습니다.</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="username">아이디</label>
+          <div class="input-wrap">
+            <span class="input-icon">👤</span>
+            <input class="form-input" id="username" type="text" placeholder="관리자 아이디를 입력하세요" autocomplete="username" onkeydown="handleKeydown(event)">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password">비밀번호</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input class="form-input" id="password" type="password" placeholder="비밀번호를 입력하세요" autocomplete="current-password" onkeydown="handleKeydown(event)">
+            <button class="pw-toggle" onclick="togglePw()" id="pw-toggle" tabindex="-1">👁</button>
+          </div>
+        </div>
+        <div class="form-options">
+          <label class="remember-label"><input type="checkbox" id="remember"> 로그인 상태 유지</label>
+          <a class="forgot-link" href="#">비밀번호 찾기</a>
+        </div>
+        <button class="login-btn" id="login-btn" onclick="handleLogin()">
+          <div class="spinner" id="spinner"></div>
+          <span class="btn-text">로그인</span>
+        </button>
+        <div class="divider">관리자 계정이 필요하신가요?</div>
+        <div style="text-align:center;font-size:12px;color:var(--text-muted);line-height:1.7;">
+          계정 발급은 시스템 담당자에게 문의하세요.<br>
+          <a href="mailto:nathan@nicednb.com" style="color:var(--cyan);text-decoration:none;font-weight:500;">nathan@nicednb.com</a>
+        </div>
+        <div class="security-note">
+          <span class="security-icon">🔐</span>
+          SSL 보안 연결로 보호됩니다
         </div>
       </div>
-
-      <!-- 비밀번호 -->
-      <div class="form-group">
-        <label class="form-label" for="password">비밀번호</label>
-        <div class="input-wrap">
-          <span class="input-icon">🔒</span>
-          <input
-            class="form-input"
-            id="password"
-            type="password"
-            placeholder="비밀번호를 입력하세요"
-            autocomplete="current-password"
-            onkeydown="handleKeydown(event)"
-          >
-          <button class="pw-toggle" onclick="togglePw()" id="pw-toggle" tabindex="-1" aria-label="비밀번호 표시">
-            👁
-          </button>
-        </div>
-      </div>
-
-      <!-- 옵션 -->
-      <div class="form-options">
-        <label class="remember-label">
-          <input type="checkbox" id="remember"> 로그인 상태 유지
-        </label>
-        <a class="forgot-link" href="#">비밀번호 찾기</a>
-      </div>
-
-      <!-- 로그인 버튼 -->
-      <button class="login-btn" id="login-btn" onclick="handleLogin()">
-        <div class="spinner" id="spinner"></div>
-        <span class="btn-text">로그인</span>
-      </button>
-
-      <div class="divider">관리자 계정이 필요하신가요?</div>
-
-      <div style="text-align:center; font-size:12px; color:var(--text-muted); line-height:1.7;">
-        계정 발급은 시스템 담당자에게 문의하세요.<br>
-        <a href="/cdn-cgi/l/email-protection#6c020d18040d022c02050f0908020e420f0301" style="color:var(--cyan); text-decoration:none; font-weight:500;"><span class="__cf_email__" data-cfemail="a3cdc2d7cbc2cde3cdcac0c6c7cdc18dc0ccce">[email&#160;protected]</span></a>
-      </div>
-
-      <div class="security-note">
-        <span class="security-icon">🔐</span>
-        SSL 보안 연결로 보호됩니다
-      </div>
-
-    </div>
-
-    <div class="right-footer">
-      NICE D&amp;B ESG Admin Console v1.0
+      <div class="right-footer">NICE D&amp;B ESG Admin Console v1.0</div>
     </div>
   </div>
-
 </div>
 
-
+<!-- ── 어드민 화면 ── -->
 <div id="screen-admin" class="app-shell">
 
   <!-- ── SIDEBAR ── -->
@@ -1155,9 +1091,7 @@
 
     <!-- CONTENT -->
     <div class="content-body">
-
-      <!-- ── 문의 관리 페이지 ── -->
-      <div id="page-inquiry">
+      <div id="page-inquiry" style="display:flex;flex-direction:column;flex:1;min-height:0;gap:16px;">
 
       <!-- STATS -->
       <div class="stats-row">
@@ -1264,70 +1198,24 @@
       </div><!-- /page-inquiry -->
 
       <!-- ── 대시보드 페이지 ── -->
-      <div id="page-dashboard" style="display:none; flex:1; overflow-y:auto; padding-bottom:24px;">
+      <div id="page-dashboard" style="display:none;flex:1;overflow-y:auto;padding-bottom:24px;">
         <div class="db-grid">
-
-          <!-- 국가별 분포 -->
           <div class="db-card">
-            <div class="card-header">
-              <div class="card-header-text">
-                <div class="card-label">국가별 분포</div>
-                <div class="card-title">문의 접수 국가 Top 8</div>
-              </div>
-            </div>
-            <div class="legend-row">
-              <span class="legend-item"><span class="legend-dot" style="background:#02227a"></span>대한민국</span>
-              <span class="legend-item"><span class="legend-dot" style="background:#11BBD1"></span>해외</span>
-            </div>
-            <div style="position:relative;width:100%;height:280px;">
-              <canvas id="countryChart" role="img" aria-label="국가별 문의 건수 가로 바 차트" style="cursor:pointer;"></canvas>
-            </div>
+            <div class="card-header"><div class="card-header-text"><div class="card-label">국가별 분포</div><div class="card-title">문의 접수 국가 Top 8</div></div></div>
+            <div class="legend-row"><span class="legend-item"><span class="legend-dot" style="background:#02227a"></span>대한민국</span><span class="legend-item"><span class="legend-dot" style="background:#11BBD1"></span>해외</span></div>
+            <div style="position:relative;width:100%;height:280px;"><canvas id="countryChart" style="cursor:pointer;"></canvas></div>
           </div>
-
-          <!-- 처리 현황 -->
           <div class="db-card">
-            <div class="card-header">
-              <div class="card-header-text">
-                <div class="card-label">처리 현황</div>
-                <div class="card-title">상태별 건수</div>
-              </div>
-            </div>
+            <div class="card-header"><div class="card-header-text"><div class="card-label">처리 현황</div><div class="card-title">상태별 건수</div></div></div>
             <div class="funnel-wrap" id="funnel-wrap"></div>
-            <div class="avg-badge">
-              <div class="avg-item">
-                <span class="avg-item-label">평균 처리 소요일</span>
-                <span class="avg-item-value">3.2일</span>
-              </div>
-              <div class="avg-divider"></div>
-              <div class="avg-item">
-                <span class="avg-item-label">완료율</span>
-                <span class="avg-item-value">71%</span>
-              </div>
-            </div>
+            <div class="avg-badge"><div class="avg-item"><span class="avg-item-label">평균 처리 소요일</span><span class="avg-item-value">3.2일</span></div><div class="avg-divider"></div><div class="avg-item"><span class="avg-item-label">완료율</span><span class="avg-item-value">71%</span></div></div>
           </div>
-
-          <!-- 월별 추이 -->
           <div class="db-card db-card-full">
-            <div class="card-header">
-              <div class="card-header-text">
-                <div class="card-label">월별 접수 추이</div>
-                <div class="card-title">최근 6개월 문의 건수</div>
-              </div>
-              <div class="period-btns">
-                <button class="period-btn active" onclick="setPeriod(6,this)">6개월</button>
-                <button class="period-btn" onclick="setPeriod(12,this)">12개월</button>
-              </div>
-            </div>
-            <div class="legend-row">
-              <span class="legend-item"><span class="legend-dot" style="background:#02227a;border-radius:50%"></span>전체 접수</span>
-              <span class="legend-item"><span class="legend-dot" style="background:#11BBD1;border-radius:50%"></span>완료 처리</span>
-            </div>
-            <div style="position:relative;width:100%;height:220px;">
-              <canvas id="trendChart" role="img" aria-label="최근 6개월 월별 문의 접수 및 완료 건수 라인 차트"></canvas>
-            </div>
+            <div class="card-header"><div class="card-header-text"><div class="card-label">월별 접수 추이</div><div class="card-title">최근 6개월 문의 건수</div></div><div class="period-btns"><button class="period-btn active" onclick="setPeriod(6,this)">6개월</button><button class="period-btn" onclick="setPeriod(12,this)">12개월</button></div></div>
+            <div class="legend-row"><span class="legend-item"><span class="legend-dot" style="background:#02227a;border-radius:50%"></span>전체 접수</span><span class="legend-item"><span class="legend-dot" style="background:#11BBD1;border-radius:50%"></span>완료 처리</span></div>
+            <div style="position:relative;width:100%;height:220px;"><canvas id="trendChart"></canvas></div>
           </div>
-
-        </div><!-- /db-grid -->
+        </div>
       </div><!-- /page-dashboard -->
 
     </div><!-- /content-body -->
@@ -1335,43 +1223,112 @@
 </div><!-- /app-shell -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-
 <script>
-const CREDENTIALS={id:"admin",pw:"password"};
-function handleKeydown(e){if(e.key==="Enter")handleLogin();}
-function togglePw(){const pw=document.getElementById("password");const btn=document.getElementById("pw-toggle");const h=pw.type==="password";pw.type=h?"text":"password";btn.textContent=h?"🙈":"👁";}
-function setError(msg){document.getElementById("error-text").textContent=msg;document.getElementById("error-msg").classList.add("show");document.getElementById("username").classList.add("error");document.getElementById("password").classList.add("error");}
-function clearError(){document.getElementById("error-msg").classList.remove("show");document.getElementById("username").classList.remove("error");document.getElementById("password").classList.remove("error");}
-function handleLogin(){
-  clearError();
-  const id=document.getElementById("username").value.trim();
-  const pw=document.getElementById("password").value;
-  if(!id){setError("아이디를 입력해 주세요.");document.getElementById("username").focus();return;}
-  if(!pw){setError("비밀번호를 입력해 주세요.");document.getElementById("password").focus();return;}
-  const btn=document.getElementById("login-btn");
-  btn.classList.add("loading");
-  setTimeout(()=>{
-    btn.classList.remove("loading");
-    if(id===CREDENTIALS.id&&pw===CREDENTIALS.pw){
-      document.getElementById("screen-login").style.display="none";
-      const a=document.getElementById("screen-admin");
-      a.style.display="flex";a.style.height="100vh";a.style.overflow="hidden";
-      initAdmin();
-    }else{
-      setError("아이디 또는 비밀번호가 올바르지 않습니다.");
-      document.getElementById("password").value="";
-      document.getElementById("password").focus();
-    }
-  },900);
+/* ══ 설정 ══ */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbys4utZ50NC_P_3WDcMFyrodEqdahQqLybKa-gnJ5CjkBAe3XwhPJUkRfLMwOW-odAf/exec';
+const CREDENTIALS = { id: 'admin', pw: 'password' };
+
+/* ══ 로그인 ══ */
+function handleKeydown(e) { if (e.key === 'Enter') handleLogin(); }
+
+function togglePw() {
+  const pw = document.getElementById('password');
+  const btn = document.getElementById('pw-toggle');
+  const h = pw.type === 'password';
+  pw.type = h ? 'text' : 'password';
+  btn.textContent = h ? '🙈' : '👁';
 }
-["username","password"].forEach(id=>{document.getElementById(id).addEventListener("input",clearError);});
 
-/* ══ CONFIG ══ */
-const SCRIPT_URL='https://script.google.com/macros/s/AKfycbys4utZ50NC_P_3WDcMFyrodEqdahQqLybKa-gnJ5CjkBAe3XwhPJUkRfLMwOW-odAf/exec';
+function setError(msg) {
+  document.getElementById('error-text').textContent = msg;
+  document.getElementById('error-msg').classList.add('show');
+  document.getElementById('username').classList.add('error');
+  document.getElementById('password').classList.add('error');
+}
 
-/* ══ ADMIN DATA ══ */
+function clearError() {
+  document.getElementById('error-msg').classList.remove('show');
+  document.getElementById('username').classList.remove('error');
+  document.getElementById('password').classList.remove('error');
+}
+
+function handleLogin() {
+  clearError();
+  const id = document.getElementById('username').value.trim();
+  const pw = document.getElementById('password').value;
+  if (!id) { setError('아이디를 입력해 주세요.'); document.getElementById('username').focus(); return; }
+  if (!pw) { setError('비밀번호를 입력해 주세요.'); document.getElementById('password').focus(); return; }
+  const btn = document.getElementById('login-btn');
+  btn.classList.add('loading');
+  setTimeout(() => {
+    btn.classList.remove('loading');
+    if (id === CREDENTIALS.id && pw === CREDENTIALS.pw) {
+      document.getElementById('screen-login').style.display = 'none';
+      const a = document.getElementById('screen-admin');
+      a.style.display = 'flex';
+      a.style.height = '100vh';
+      a.style.overflow = 'hidden';
+      initAdmin();
+    } else {
+      setError('아이디 또는 비밀번호가 올바르지 않습니다.');
+      document.getElementById('password').value = '';
+      document.getElementById('password').focus();
+    }
+  }, 900);
+}
+
+['username', 'password'].forEach(id => {
+  document.getElementById(id).addEventListener('input', clearError);
+});
+
+/* ══ 어드민 데이터 & 상태 ══ */
+const STATUSES = {
+  new:    { label: '신규',    cls: 'new' },
+  inprog: { label: '처리 중', cls: 'inprog' },
+  done:   { label: '완료',    cls: 'done' },
+  closed: { label: '종결',    cls: 'closed' },
+};
+
+let DATA = [];
+let currentFilter = 'all';
+let currentSort   = { key: 'date', asc: false };
+let selectedId    = null;
+let currentPage   = 1;
+const PAGE_SIZE   = 8;
+
+/* ══ 어드민 로직 ══ */
 
 /* ── DATA ── */
+const STATUSES = {
+  new:    { label: '신규',    cls: 'new' },
+  inprog: { label: '처리 중', cls: 'inprog' },
+  done:   { label: '완료',    cls: 'done' },
+  closed: { label: '종결',    cls: 'closed' },
+};
+
+let DATA = [
+  { id:'INQ-042', company:'Hanwha Group',         name:'김민준',    country:'대한민국', email:'minjun@hanwha.com',        phone:'02-1234-5678',    subject:'ESG 평가 도입 검토',         status:'new',    date:'2026-04-10', msg:'안녕하세요. ESG 평가 서비스에 대해 자세한 안내를 요청드립니다. 당사는 상장을 준비 중이며 GHG 범위별 배출량 측정 관련 지원이 필요합니다.' },
+  { id:'INQ-041', company:'Doosan Enerbility',    name:'이서연',    country:'대한민국', email:'seoyeon@doosan.com',        phone:'02-2345-6789',    subject:'탄소중립 로드맵 파트너십',    status:'inprog', date:'2026-04-09', msg:'탄소중립 로드맵 수립을 위해 파트너십을 맺고 싶습니다. 구체적인 서비스 범위와 견적을 받고 싶으니 담당자 연결 부탁드립니다.' },
+  { id:'INQ-040', company:'Mitsui & Co.',         name:'Tanaka Yui',country:'일본',    email:'yui.t@mitsui.co.jp',       phone:'+81-3-0000-1111', subject:'ESG Data API 연동 문의',     status:'new',    date:'2026-04-09', msg:'We are interested in integrating ESG data through your API. Please provide technical documentation and pricing details.' },
+  { id:'INQ-039', company:'Hyundai Motor',        name:'박지호',    country:'대한민국', email:'jiho.park@hyundai.com',    phone:'031-000-0000',    subject:'공급망 ESG 실사 서비스',      status:'done',   date:'2026-04-08', msg:'공급망 협력사 ESG 실사 일괄 처리 서비스 도입을 검토 중입니다. 협력사 규모 및 가격 체계를 안내해 주시기 바랍니다.' },
+  { id:'INQ-038', company:'CATL Europe',          name:'Wei Chen',  country:'독일',    email:'wchen@catl.com',           phone:'+49-89-0000-0001',subject:'Battery ESG Rating',         status:'new',    date:'2026-04-08', msg:'We need ESG rating services focused on battery supply chains for our EU market compliance. Please share a proposal.' },
+  { id:'INQ-037', company:'Lotte Chemical',       name:'최수빈',    country:'대한민국', email:'subin@lottechem.com',      phone:'02-3456-7890',    subject:'화학업종 ESG 지표 커스텀',    status:'inprog', date:'2026-04-07', msg:'화학업종 특화 ESG 지표 개발 및 커스텀 보고서 제공 가능한지 궁금합니다. 기존 MSCI 프레임워크와의 연동도 문의드립니다.' },
+  { id:'INQ-036', company:'ThaiBev',              name:'Somchai K.',country:'태국',    email:'somchai@thaibev.com',      phone:'+66-2-000-0001',  subject:'ASEAN ESG Partnership',      status:'new',    date:'2026-04-07', msg:'We are exploring ESG certification partnerships across ASEAN markets. Please contact our CSR team at the earliest convenience.' },
+  { id:'INQ-035', company:'SK Hynix',             name:'정윤아',    country:'대한민국', email:'yuna.j@skhynix.com',      phone:'031-5000-0000',   subject:'반도체 ESG 이슈 대응',         status:'done',   date:'2026-04-05', msg:'반도체 공정 내 환경 지표 산정 기준 및 Scope 3 배출량 산정 방법에 대해 문의드립니다.' },
+  { id:'INQ-034', company:'Vale S.A.',            name:'Ana Lima',  country:'브라질',  email:'a.lima@vale.com',          phone:'+55-21-0000-0000',subject:'Mining Sector ESG Audit',    status:'closed', date:'2026-04-03', msg:'Requesting ESG audit services for our iron ore mining operations in compliance with global sustainability standards.' },
+  { id:'INQ-033', company:'POSCO',                name:'강태양',    country:'대한민국', email:'taeyang@posco.com',        phone:'054-220-0000',    subject:'철강 탄소배출 데이터 관리',    status:'done',   date:'2026-04-01', msg:'POSCO 그룹사 전체 탄소배출 데이터 통합 관리 플랫폼 도입을 검토 중입니다. 기업 규모별 맞춤형 솔루션을 안내해 주세요.' },
+  { id:'INQ-032', company:'Singapore Airlines',   name:'Liu Mei',   country:'싱가포르',email:'l.mei@singaporeair.com',   phone:'+65-6000-0001',   subject:'Aviation ESG Certification', status:'done',   date:'2026-03-30', msg:'We are seeking ESG certification support for our aviation sustainability report aligned with TCFD and GRI standards.' },
+  { id:'INQ-031', company:'삼성물산',              name:'오재현',    country:'대한민국', email:'jaehyun.oh@samsung.com',  phone:'02-2145-0000',    subject:'건설업 ESG 평가 기준',         status:'inprog', date:'2026-03-28', msg:'건설 및 부동산 부문 ESG 평가 기준이 궁금합니다. 특히 환경 영향 평가 항목과 사회 지표 연계 방안을 알고 싶습니다.' },
+];
+
+/* ── STATE ── */
+let currentFilter = 'all';
+let currentSort   = { key: 'date', asc: false };
+let selectedId    = null;
+let currentPage   = 1;
+const PAGE_SIZE   = 8;
+
+/* ── TOPBAR DATE ── */
 
 /* ── HELPERS ── */
 function getFiltered() {
@@ -1572,127 +1529,175 @@ function exportCSV() {
 
 
 
-let DATA=[];
-const STATUSES={new:{label:'신규',cls:'new'},inprog:{label:'처리 중',cls:'inprog'},done:{label:'완료',cls:'done'},closed:{label:'종결',cls:'closed'}};
-let currentFilter='all';
-let currentSort={key:'date',asc:false};
-let selectedId=null;
-let currentPage=1;
-const PAGE_SIZE=8;
-
-function statusKeyFromLabel(label){
-  const map={'신규':'new','처리 중':'inprog','완료':'done','종결':'closed'};
-  return map[label]||'new';
+/* ══ Sheets 연동 ══ */
+function statusKeyFromLabel(label) {
+  const map = { '신규':'new', '처리 중':'inprog', '완료':'done', '종결':'closed' };
+  return map[label] || 'new';
 }
 
-/* ── 목업 데이터 (SCRIPT_URL 미설정 시 사용) ── */
-const MOCK_DATA = [
-  { id:'INQ-042', company:'Hanwha Group',      name:'김민준',    country:'대한민국', email:'minjun@hanwha.com',      phone:'02-1234-5678',    subject:'ESG 평가 도입 검토',       status:'new',    date:'2026-04-10', msg:'안녕하세요. ESG 평가 서비스에 대해 자세한 안내를 요청드립니다. 당사는 상장을 준비 중이며 GHG 범위별 배출량 측정 관련 지원이 필요합니다.' },
-  { id:'INQ-041', company:'Doosan Enerbility', name:'이서연',    country:'대한민국', email:'seoyeon@doosan.com',      phone:'02-2345-6789',    subject:'탄소중립 로드맵 파트너십',  status:'inprog', date:'2026-04-09', msg:'탄소중립 로드맵 수립을 위해 파트너십을 맺고 싶습니다. 구체적인 서비스 범위와 견적을 받고 싶으니 담당자 연결 부탁드립니다.' },
-  { id:'INQ-040', company:'Mitsui & Co.',      name:'Tanaka Yui',country:'일본',    email:'yui.t@mitsui.co.jp',     phone:'+81-3-0000-1111', subject:'ESG Data API 연동 문의',   status:'new',    date:'2026-04-09', msg:'We are interested in integrating ESG data through your API. Please provide technical documentation and pricing details.' },
-  { id:'INQ-039', company:'Hyundai Motor',     name:'박지호',    country:'대한민국', email:'jiho.park@hyundai.com',  phone:'031-000-0000',    subject:'공급망 ESG 실사 서비스',    status:'done',   date:'2026-04-08', msg:'공급망 협력사 ESG 실사 일괄 처리 서비스 도입을 검토 중입니다. 협력사 규모 및 가격 체계를 안내해 주시기 바랍니다.' },
-  { id:'INQ-038', company:'CATL Europe',       name:'Wei Chen',  country:'독일',    email:'wchen@catl.com',          phone:'+49-89-0000-0001',subject:'Battery ESG Rating',       status:'new',    date:'2026-04-08', msg:'We need ESG rating services focused on battery supply chains for our EU market compliance. Please share a proposal.' },
-  { id:'INQ-037', company:'Lotte Chemical',    name:'최수빈',    country:'대한민국', email:'subin@lottechem.com',    phone:'02-3456-7890',    subject:'화학업종 ESG 지표 커스텀',  status:'inprog', date:'2026-04-07', msg:'화학업종 특화 ESG 지표 개발 및 커스텀 보고서 제공 가능한지 궁금합니다. 기존 MSCI 프레임워크와의 연동도 문의드립니다.' },
-  { id:'INQ-036', company:'ThaiBev',           name:'Somchai K.',country:'태국',    email:'somchai@thaibev.com',    phone:'+66-2-000-0001',  subject:'ASEAN ESG Partnership',    status:'new',    date:'2026-04-07', msg:'We are exploring ESG certification partnerships across ASEAN markets. Please contact our CSR team at the earliest convenience.' },
-  { id:'INQ-035', company:'SK Hynix',          name:'정윤아',    country:'대한민국', email:'yuna.j@skhynix.com',    phone:'031-5000-0000',   subject:'반도체 ESG 이슈 대응',       status:'done',   date:'2026-04-05', msg:'반도체 공정 내 환경 지표 산정 기준 및 Scope 3 배출량 산정 방법에 대해 문의드립니다.' },
-  { id:'INQ-034', company:'Vale S.A.',         name:'Ana Lima',  country:'브라질',  email:'a.lima@vale.com',         phone:'+55-21-0000-0000',subject:'Mining Sector ESG Audit',  status:'closed', date:'2026-04-03', msg:'Requesting ESG audit services for our iron ore mining operations in compliance with global sustainability standards.' },
-  { id:'INQ-033', company:'POSCO',             name:'강태양',    country:'대한민국', email:'taeyang@posco.com',      phone:'054-220-0000',    subject:'철강 탄소배출 데이터 관리',  status:'done',   date:'2026-04-01', msg:'POSCO 그룹사 전체 탄소배출 데이터 통합 관리 플랫폼 도입을 검토 중입니다. 기업 규모별 맞춤형 솔루션을 안내해 주세요.' },
-  { id:'INQ-032', company:'Singapore Airlines',name:'Liu Mei',   country:'싱가포르',email:'l.mei@singaporeair.com', phone:'+65-6000-0001',   subject:'Aviation ESG Certification',status:'done',   date:'2026-03-30', msg:'We are seeking ESG certification support for our aviation sustainability report aligned with TCFD and GRI standards.' },
-  { id:'INQ-031', company:'삼성물산',           name:'오재현',    country:'대한민국', email:'jaehyun.oh@samsung.com', phone:'02-2145-0000',   subject:'건설업 ESG 평가 기준',       status:'inprog', date:'2026-03-28', msg:'건설 및 부동산 부문 ESG 평가 기준이 궁금합니다. 특히 환경 영향 평가 항목과 사회 지표 연계 방안을 알고 싶습니다.' },
-];
-
-function loadFromSheets(){
-  /* SCRIPT_URL 미설정 시 → 목업 데이터로 즉시 렌더 */
-  if(SCRIPT_URL.includes('여기에_배포_URL')){
-    DATA = MOCK_DATA;
-    render();
-    chartsInitialized=false;
-    return;
-  }
-
-  const btn=document.getElementById("topbar-refresh-btn");
-  if(btn){btn.disabled=true;btn.textContent="↻ 불러오는 중...";}
-
+function loadFromSheets() {
+  const btn = document.getElementById('topbar-refresh-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '↻ 불러오는 중...'; }
   fetch(SCRIPT_URL)
-    .then(r=>r.json())
-    .then(json=>{
-      if(!json.success)throw new Error(json.error||"오류");
-      DATA=json.data.map(r=>({
-        id:String(r.id||''),date:String(r.date||''),company:String(r.company||''),
-        name:String(r.name||''),email:String(r.email||''),phone:String(r.phone||''),
-        country:String(r.country||''),subject:String(r.subject||''),
-        msg:String(r.msg||''),status:statusKeyFromLabel(String(r.status||'')),
+    .then(r => r.json())
+    .then(json => {
+      if (!json.success) throw new Error(json.error || '오류');
+      DATA = json.data.map(r => ({
+        id: String(r.id||''), date: String(r.date||''), company: String(r.company||''),
+        name: String(r.name||''), email: String(r.email||''), phone: String(r.phone||''),
+        country: String(r.country||''), subject: String(r.subject||''),
+        msg: String(r.msg||''), status: statusKeyFromLabel(String(r.status||'')),
       }));
       render();
-      chartsInitialized=false;
+      chartsInitialized = false;
     })
-    .catch(err=>{
-      console.error("Sheets 로드 실패:",err);
-      alert("문의 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.");
+    .catch(err => {
+      console.error('Sheets 로드 실패:', err);
+      alert('문의 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.');
     })
-    .finally(()=>{if(btn){btn.disabled=false;btn.textContent="↻ 새로고침";}});
+    .finally(() => { if (btn) { btn.disabled = false; btn.textContent = '↻ 새로고침'; } });
 }
 
-function updateStatus(){
-  const r=DATA.find(x=>x.id===selectedId);
-  if(!r)return;
-  const newKey=document.getElementById("dp-status-select").value;
-  const newLabel=STATUSES[newKey]?.label||newKey;
-  r.status=newKey;render();openDetail(selectedId);
-  if(!SCRIPT_URL.includes('여기에_배포_URL')){
-    fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({_method:'PATCH',id:r.id,status:newLabel})})
-      .then(res=>res.json()).then(j=>{if(!j.success)console.error('상태 저장 실패:',j.error);})
-      .catch(e=>console.error('상태 저장 오류:',e));
+function updateStatus() {
+  const r = DATA.find(x => x.id === selectedId);
+  if (!r) return;
+  const newKey   = document.getElementById('dp-status-select').value;
+  const newLabel = STATUSES[newKey]?.label || newKey;
+  r.status = newKey;
+  render();
+  openDetail(selectedId);
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ _method: 'PATCH', id: r.id, status: newLabel }),
+  }).catch(e => console.error('상태 저장 오류:', e));
+}
+
+/* ══ 대시보드 ══ */
+let chartsInitialized = false;
+let trendChartInstance = null;
+
+const allMonths6  = ['11월','12월','1월','2월','3월','4월'];
+const allTotal6   = [8,11,14,18,22,42];
+const allDone6    = [6,9,11,14,18,30];
+const allMonths12 = ['5월','6월','7월','8월','9월','10월','11월','12월','1월','2월','3월','4월'];
+const allTotal12  = [5,6,7,9,10,8,8,11,14,18,22,42];
+const allDone12   = [4,5,5,7,8,6,6,9,11,14,18,30];
+
+function showPage(page, navEl) {
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  if (navEl) navEl.classList.add('active');
+  const inq  = document.getElementById('page-inquiry');
+  const dash = document.getElementById('page-dashboard');
+  const rb   = document.getElementById('topbar-refresh-btn');
+  const ti   = document.getElementById('topbar-title');
+  if (page === 'dashboard') {
+    inq.style.display  = 'none';
+    dash.style.display = 'block';
+    ti.textContent     = '대시보드';
+    if (rb) rb.style.display = 'none';
+    if (!chartsInitialized) initDashboardCharts();
+  } else {
+    inq.style.display  = 'flex';
+    dash.style.display = 'none';
+    ti.textContent     = 'Contact Us 문의 관리';
+    if (rb) rb.style.display = '';
   }
 }
 
-let chartsInitialized=false,trendChartInstance=null;
-const allMonths6=['11월','12월','1월','2월','3월','4월'],allTotal6=[8,11,14,18,22,42],allDone6=[6,9,11,14,18,30];
-const allMonths12=['5월','6월','7월','8월','9월','10월','11월','12월','1월','2월','3월','4월'],allTotal12=[5,6,7,9,10,8,8,11,14,18,22,42],allDone12=[4,5,5,7,8,6,6,9,11,14,18,30];
-
-function showPage(page,navEl){
-  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
-  if(navEl)navEl.classList.add('active');
-  const inq=document.getElementById('page-inquiry'),dash=document.getElementById('page-dashboard');
-  const rb=document.getElementById('topbar-refresh-btn'),ti=document.getElementById('topbar-title');
-  if(page==='dashboard'){
-    inq.style.display='none';dash.style.display='block';
-    ti.textContent='대시보드';if(rb)rb.style.display='none';
-    if(!chartsInitialized)initDashboardCharts();
-  }else{
-    inq.style.display='flex';dash.style.display='none';
-    ti.textContent='Contact Us 문의 관리';if(rb)rb.style.display='';
+function navigateWithFilter(type, value) {
+  if (type === 'status') {
+    currentFilter = value;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === value));
+    document.getElementById('search-input').value = '';
+  } else if (type === 'country') {
+    currentFilter = 'all';
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === 'all'));
+    document.getElementById('search-input').value = value === '기타' ? '' : value;
   }
+  currentPage = 1;
+  render();
+  showPage('inquiry', document.querySelector('.nav-item'));
 }
 
-function navigateWithFilter(type,value){
-  if(type==='status'){currentFilter=value;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.filter===value));document.getElementById('search-input').value='';}
-  else if(type==='country'){currentFilter='all';document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.filter==='all'));document.getElementById('search-input').value=value==='기타'?'':value;}
-  currentPage=1;render();showPage('inquiry',document.querySelector('.nav-item'));
+function initDashboardCharts() {
+  chartsInitialized = true;
+  const isDark  = matchMedia('(prefers-color-scheme: dark)').matches;
+  const textCol = isDark ? 'rgba(255,255,255,0.55)' : 'rgba(26,35,64,0.55)';
+  const gridCol = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(2,34,122,0.07)';
+  const cc = {};
+  DATA.forEach(r => { cc[r.country] = (cc[r.country]||0) + 1; });
+  const sorted = Object.entries(cc).sort((a,b) => b[1]-a[1]).slice(0,8);
+  const cL = sorted.map(e => e[0]);
+  const cD = sorted.map(e => e[1]);
+  const cC = cL.map(l => l === '대한민국' ? '#02227a' : '#11BBD1');
+  new Chart(document.getElementById('countryChart'), {
+    type: 'bar',
+    data: { labels: cL, datasets: [{ label: '문의 건수', data: cD, backgroundColor: cC, borderRadius: 4, borderSkipped: false }] },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.x}건` } } },
+      scales: {
+        x: { grid: { color: gridCol }, ticks: { color: textCol, font: { size: 11 }, stepSize: 1 }, border: { display: false } },
+        y: { grid: { display: false }, ticks: { color: textCol, font: { size: 12 } }, border: { display: false } },
+      },
+      onClick: (evt, elements) => {
+        if (!elements.length) return;
+        navigateWithFilter('country', cL[elements[0].index]);
+      }
+    }
+  });
+  const fd = [
+    { label: '신규',    status: 'new',    count: DATA.filter(r=>r.status==='new').length,    color: '#11BBD1' },
+    { label: '처리 중', status: 'inprog', count: DATA.filter(r=>r.status==='inprog').length, color: '#EF9F27' },
+    { label: '완료',    status: 'done',   count: DATA.filter(r=>r.status==='done').length,   color: '#1D9E75' },
+    { label: '종결',    status: 'closed', count: DATA.filter(r=>r.status==='closed').length, color: '#888780' },
+  ];
+  const tot = fd.reduce((s,d) => s+d.count, 0);
+  const fw = document.getElementById('funnel-wrap');
+  fw.innerHTML = '';
+  fd.forEach(d => {
+    const p = tot > 0 ? Math.round(d.count/tot*100) : 0;
+    fw.innerHTML += `<div class="funnel-row funnel-row-click" onclick="navigateWithFilter('status','${d.status}')" title="${d.label} 문의 보기"><div class="funnel-label-group"><span class="funnel-label">${d.label}</span><span class="funnel-count">[${d.count}건]</span></div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${p}%;background:${d.color}"></div></div><span class="funnel-pct">${p}%</span></div>`;
+  });
+  trendChartInstance = new Chart(document.getElementById('trendChart'), {
+    type: 'line',
+    data: {
+      labels: allMonths6,
+      datasets: [
+        { label: '전체 접수', data: allTotal6, borderColor: '#02227a', backgroundColor: 'rgba(2,34,122,0.08)', fill: true, tension: 0.35, pointBackgroundColor: '#02227a', pointRadius: 4, borderWidth: 2 },
+        { label: '완료 처리', data: allDone6,  borderColor: '#11BBD1', backgroundColor: 'rgba(17,187,209,0.07)', fill: true, tension: 0.35, pointBackgroundColor: '#11BBD1', pointRadius: 4, borderWidth: 2, borderDash: [5,3] }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: gridCol }, ticks: { color: textCol, font: { size: 11 }, autoSkip: false }, border: { display: false } },
+        y: { grid: { color: gridCol }, ticks: { color: textCol, font: { size: 11 }, stepSize: 10 }, border: { display: false }, min: 0 }
+      }
+    }
+  });
 }
 
-function initDashboardCharts(){
-  chartsInitialized=true;
-  const isDark=matchMedia('(prefers-color-scheme: dark)').matches;
-  const tc=isDark?'rgba(255,255,255,0.55)':'rgba(26,35,64,0.55)';
-  const gc=isDark?'rgba(255,255,255,0.07)':'rgba(2,34,122,0.07)';
-  const cc={};DATA.forEach(r=>{cc[r.country]=(cc[r.country]||0)+1;});
-  const sorted=Object.entries(cc).sort((a,b)=>b[1]-a[1]).slice(0,8);
-  const cL=sorted.map(e=>e[0]),cD=sorted.map(e=>e[1]);
-  const cC=cL.map(l=>l==='대한민국'?'#02227a':'#11BBD1');
-  new Chart(document.getElementById('countryChart'),{type:'bar',data:{labels:cL,datasets:[{label:'문의 건수',data:cD,backgroundColor:cC,borderRadius:4,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.parsed.x}건`}}},scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11},stepSize:1},border:{display:false}},y:{grid:{display:false},ticks:{color:tc,font:{size:12}},border:{display:false}}},onClick:(evt,elements)=>{if(!elements.length)return;navigateWithFilter('country',cL[elements[0].index]);}}});
-  const fd=[{label:'신규',status:'new',count:DATA.filter(r=>r.status==='new').length,color:'#11BBD1'},{label:'처리 중',status:'inprog',count:DATA.filter(r=>r.status==='inprog').length,color:'#EF9F27'},{label:'완료',status:'done',count:DATA.filter(r=>r.status==='done').length,color:'#1D9E75'},{label:'종결',status:'closed',count:DATA.filter(r=>r.status==='closed').length,color:'#888780'}];
-  const tot=fd.reduce((s,d)=>s+d.count,0);
-  const fw=document.getElementById('funnel-wrap');fw.innerHTML='';
-  fd.forEach(d=>{const p=tot>0?Math.round(d.count/tot*100):0;fw.innerHTML+=`<div class="funnel-row funnel-row-click" onclick="navigateWithFilter('status','${d.status}')" title="${d.label} 문의 보기"><div class="funnel-label-group"><span class="funnel-label">${d.label}</span><span class="funnel-count">[${d.count}건]</span></div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${p}%;background:${d.color}"></div></div><span class="funnel-pct">${p}%</span></div>`;});
-  trendChartInstance=new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:allMonths6,datasets:[{label:'전체 접수',data:allTotal6,borderColor:'#02227a',backgroundColor:'rgba(2,34,122,0.08)',fill:true,tension:0.35,pointBackgroundColor:'#02227a',pointRadius:4,borderWidth:2},{label:'완료 처리',data:allDone6,borderColor:'#11BBD1',backgroundColor:'rgba(17,187,209,0.07)',fill:true,tension:0.35,pointBackgroundColor:'#11BBD1',pointRadius:4,borderWidth:2,borderDash:[5,3]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11},autoSkip:false},border:{display:false}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11},stepSize:10},border:{display:false},min:0}}}});
+function setPeriod(months, btn) {
+  document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (!trendChartInstance) return;
+  trendChartInstance.data.labels = months === 6 ? allMonths6 : allMonths12;
+  trendChartInstance.data.datasets[0].data = months === 6 ? allTotal6 : allTotal12;
+  trendChartInstance.data.datasets[1].data = months === 6 ? allDone6  : allDone12;
+  trendChartInstance.update();
 }
 
-function setPeriod(months,btn){document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(!trendChartInstance)return;trendChartInstance.data.labels=months===6?allMonths6:allMonths12;trendChartInstance.data.datasets[0].data=months===6?allTotal6:allTotal12;trendChartInstance.data.datasets[1].data=months===6?allDone6:allDone12;trendChartInstance.update();}
-
-function initAdmin(){
-  document.getElementById("topbar-date").textContent=new Date().toLocaleDateString("ko-KR",{year:"numeric",month:"long",day:"numeric"})+" 기준";
-  document.getElementById("search-input").addEventListener("input",()=>{currentPage=1;render();});
+/* ══ 초기화 ══ */
+function initAdmin() {
+  document.getElementById('topbar-date').textContent =
+    new Date().toLocaleDateString('ko-KR', { year:'numeric', month:'long', day:'numeric' }) + ' 기준';
+  document.getElementById('search-input').addEventListener('input', () => {
+    currentPage = 1; render();
+  });
   loadFromSheets();
 }
 </script>
