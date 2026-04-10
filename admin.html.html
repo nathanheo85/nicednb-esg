@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NICE D&B ESG — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* 공통 */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+#screen-login { display: flex; min-height: 100vh; }
+#screen-admin { display: none; }
+
+/* 로그인 스타일 */
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --brand:       #02227a;
+    --brand-light: #0a2f99;
+    --brand-dark:  #011550;
+    --cyan:        #11BBD1;
+    --cyan-dim:    rgba(17,187,209,0.18);
+    --white:       #ffffff;
+    --gray-light:  #f0f2f8;
+    --text:        #1a2340;
+    --text-muted:  #6b7a99;
+    --border:      rgba(2,34,122,0.14);
+    --error:       #c0392b;
+    --error-bg:    rgba(192,57,43,0.07);
+  }
+
+  html, body {
+    height: 100%;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--gray-light);
+    color: var(--text);
+  }
+
+  /* ── LAYOUT ── */
+  .shell {
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    min-height: 100vh;
+  }
+
+  /* ── LEFT PANEL ── */
+  .left-panel {
+    background: var(--brand);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 48px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .left-center-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 0;
+  }
+  .lc-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: .08em;
+  }
+  .lc-divider {
+    width: 48px;
+    height: 3px;
+    background: var(--cyan);
+    border-radius: 2px;
+    margin: 18px 0 16px;
+  }
+  .lc-sub {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .20em;
+    color: rgba(255,255,255,.40);
+  }
+
+  /* 배경 장식 원 */
+  .left-panel::before {
+    content: '';
+    position: absolute;
+    width: 520px; height: 520px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.06);
+    top: -160px; right: -160px;
+    pointer-events: none;
+  }
+  .left-panel::after {
+    content: '';
+    position: absolute;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    border: 1px solid rgba(17,187,209,0.12);
+    bottom: -100px; left: -80px;
+    pointer-events: none;
+  }
+
+  .left-logo {
+    position: relative; z-index: 1;
+  }
+  .left-logo .brand-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: .08em;
+  }
+  .left-logo .brand-divider {
+    width: 32px; height: 2px;
+    background: var(--cyan);
+    border-radius: 2px;
+    margin: 10px 0 12px;
+  }
+  .left-logo .brand-sub {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    color: rgba(255,255,255,.40);
+  }
+
+  .left-content {
+    position: relative; z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px 0;
+  }
+  .left-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    color: var(--cyan);
+    margin-bottom: 16px;
+  }
+  .left-headline {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 20px;
+  }
+  .left-headline em {
+    font-style: normal;
+    color: var(--cyan);
+  }
+  .left-desc {
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(255,255,255,.50);
+    max-width: 380px;
+  }
+
+  /* 통계 카드 */
+  .left-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 40px;
+  }
+  .stat-pill {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .stat-pill .num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+  .stat-pill .num span { color: var(--cyan); font-size: 14px; }
+  .stat-pill .lbl {
+    font-size: 11px;
+    color: rgba(255,255,255,.38);
+    margin-top: 5px;
+    letter-spacing: .02em;
+  }
+
+  .left-footer {
+    position: relative; z-index: 1;
+    font-size: 11px;
+    color: rgba(255,255,255,.22);
+    letter-spacing: .04em;
+    text-align: center;
+  }
+
+  /* ── RIGHT PANEL (LOGIN FORM) ── */
+  .right-panel {
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 48px 56px;
+    border-left: 1px solid var(--border);
+  }
+
+  .login-box {
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .login-header { margin-bottom: 36px; }
+  .login-header .greeting {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .login-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--brand);
+    letter-spacing: -.01em;
+  }
+
+  /* FORM */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .form-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: .03em;
+  }
+  .input-wrap { position: relative; }
+  .input-icon {
+    position: absolute;
+    left: 13px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    color: var(--text-muted);
+    pointer-events: none;
+    line-height: 1;
+  }
+  .form-input {
+    width: 100%;
+    padding: 11px 14px 11px 38px;
+    font-size: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--gray-light);
+    color: var(--text);
+    outline: none;
+    transition: border-color .15s, background .15s;
+  }
+  .form-input::placeholder { color: #b0bace; }
+  .form-input:focus {
+    border-color: var(--cyan);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(17,187,209,0.10);
+  }
+  .form-input.error { border-color: var(--error); background: var(--error-bg); }
+
+  /* 비밀번호 토글 */
+  .pw-toggle {
+    position: absolute;
+    right: 13px; top: 50%;
+    transform: translateY(-50%);
+    background: none; border: none;
+    cursor: pointer; color: var(--text-muted);
+    font-size: 14px; padding: 0; line-height: 1;
+    transition: color .12s;
+  }
+  .pw-toggle:hover { color: var(--brand); }
+
+  .form-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .remember-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    user-select: none;
+  }
+  .remember-label input[type="checkbox"] {
+    width: 15px; height: 15px;
+    accent-color: var(--cyan);
+    cursor: pointer;
+  }
+  .forgot-link {
+    font-size: 12px;
+    color: var(--cyan);
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity .12s;
+  }
+  .forgot-link:hover { opacity: .75; }
+
+  /* 에러 메시지 */
+  .error-msg {
+    display: none;
+    align-items: center;
+    gap: 7px;
+    background: var(--error-bg);
+    border: 1px solid rgba(192,57,43,.18);
+    border-radius: 8px;
+    padding: 10px 13px;
+    font-size: 12px;
+    color: var(--error);
+    margin-bottom: 16px;
+  }
+  .error-msg.show { display: flex; }
+  .error-icon { font-size: 14px; flex-shrink: 0; }
+
+  /* 로그인 버튼 */
+  .login-btn {
+    width: 100%;
+    padding: 13px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--brand);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    letter-spacing: .03em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background .15s, transform .1s;
+    position: relative;
+    overflow: hidden;
+  }
+  .login-btn:hover { background: var(--brand-light); }
+  .login-btn:active { transform: scale(.99); }
+  .login-btn.loading { pointer-events: none; opacity: .8; }
+
+  /* 로딩 스피너 */
+  .spinner {
+    display: none;
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+  }
+  .login-btn.loading .spinner { display: block; }
+  .login-btn.loading .btn-text { opacity: .6; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* 구분선 */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+    font-size: 11px;
+    color: #c5cde0;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* 보안 배지 */
+  .security-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #b0bace;
+    margin-top: 32px;
+  }
+  .security-icon { font-size: 13px; }
+
+  /* 접근 제한 배지 */
+  .access-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(2,34,122,0.06);
+    border: 1px solid rgba(2,34,122,0.12);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--brand);
+    letter-spacing: .04em;
+    margin-bottom: 28px;
+  }
+  .access-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--cyan);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: .5; transform: scale(.8); }
+  }
+
+  /* 하단 저작권 */
+  .right-footer {
+    margin-top: auto;
+    padding-top: 32px;
+    font-size: 11px;
+    color: #c5cde0;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* 반응형 */
+  @media (max-width: 860px) {
+    .shell { grid-template-columns: 1fr; }
+    .left-panel { display: none; }
+    .right-panel { padding: 40px 28px; }
+  }
+
+
+/* 어드민 스타일 */
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --brand: #02227a;
+    --brand-light: #0a2f99;
+    --cyan: #11BBD1;
+    --cyan-bg: rgba(17,187,209,0.10);
+    --white: #ffffff;
+    --bg-page: #f0f2f8;
+    --bg-surface: #ffffff;
+    --bg-secondary: #f4f6fb;
+    --text-primary: #1a2340;
+    --text-secondary: #6b7a99;
+    --text-tertiary: #a0aec0;
+    --border: rgba(2,34,122,0.10);
+    --border-strong: rgba(2,34,122,0.18);
+
+    --badge-new-bg: rgba(17,187,209,0.13);
+    --badge-new-text: #0a7fa8;
+    --badge-in-bg: rgba(250,190,50,0.14);
+    --badge-in-text: #a07000;
+    --badge-done-bg: rgba(30,180,100,0.13);
+    --badge-done-text: #1b7a50;
+    --badge-closed-bg: rgba(150,150,155,0.14);
+    --badge-closed-text: #60606a;
+  }
+
+  html, body {
+    height: 100%;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-size: 14px;
+  }
+
+  /* ── LAYOUT ── */
+  .app-shell {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 230px;
+    flex-shrink: 0;
+    background: var(--brand);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+  }
+  .sidebar-logo .brand-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: .06em;
+  }
+  .sidebar-logo .brand-sub {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    color: rgba(255,255,255,.40);
+    margin-top: 3px;
+  }
+
+  .sidebar-section-label {
+    padding: 18px 20px 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    color: rgba(255,255,255,.30);
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,.65);
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all .15s;
+    user-select: none;
+    text-decoration: none;
+  }
+  .nav-item:hover { background: rgba(255,255,255,.07); color: #fff; }
+  .nav-item.active {
+    background: rgba(17,187,209,.15);
+    color: var(--cyan);
+    border-left-color: var(--cyan);
+  }
+  .nav-icon {
+    width: 18px;
+    text-align: center;
+    font-style: normal;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .nav-badge {
+    margin-left: auto;
+    background: var(--cyan);
+    color: var(--brand);
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 1px 7px;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  .sidebar-divider { border: none; border-top: 1px solid rgba(255,255,255,.08); margin: 10px 0; }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sidebar-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .sidebar-user-info .user-name { font-size: 12px; font-weight: 600; color: #fff; }
+  .sidebar-user-info .user-role { font-size: 10px; color: rgba(255,255,255,.40); margin-top: 1px; }
+
+  /* ── MAIN ── */
+  .main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    height: 56px;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    gap: 14px;
+    flex-shrink: 0;
+    box-shadow: 0 1px 0 rgba(2,34,122,0.05);
+  }
+  .topbar-title { font-size: 15px; font-weight: 700; color: var(--brand); flex: 1; }
+  .topbar-meta { font-size: 12px; color: var(--text-tertiary); }
+  .topbar-refresh {
+    padding: 6px 12px; font-size: 12px; font-weight: 500;
+    border: 1px solid var(--border-strong); border-radius: 6px;
+    background: transparent; color: var(--text-secondary);
+    cursor: pointer; display: flex; align-items: center; gap: 5px;
+    transition: background .12s;
+  }
+  .topbar-refresh:hover { background: var(--bg-secondary); }
+
+  /* ── CONTENT BODY ── */
+  .content-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 20px 24px 0;
+    gap: 16px;
+  }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .stat-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: box-shadow .15s;
+  }
+  .stat-card:hover { box-shadow: 0 2px 12px rgba(2,34,122,0.08); }
+  .stat-card.accent { border-color: var(--cyan); }
+  .stat-label { font-size: 11px; font-weight: 600; color: var(--text-secondary); letter-spacing: .03em; }
+  .stat-value { font-size: 26px; font-weight: 700; color: var(--text-primary); line-height: 1.1; }
+  .stat-card.accent .stat-value { color: var(--cyan); }
+  .stat-delta { font-size: 11px; color: var(--text-tertiary); }
+  .delta-up { color: #1b7a50; }
+
+  /* TOOLBAR */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .search-wrap { flex: 1; position: relative; }
+  .search-icon {
+    position: absolute; left: 11px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary); pointer-events: none;
+    font-size: 15px;
+  }
+  .search-input {
+    width: 100%;
+    padding: 8px 12px 8px 34px;
+    font-size: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color .15s;
+  }
+  .search-input:focus { border-color: var(--cyan); }
+  .search-input::placeholder { color: var(--text-tertiary); }
+
+  .filter-btn {
+    padding: 8px 14px; font-size: 12px; font-weight: 600;
+    font-family: 'Noto Sans KR', sans-serif;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    cursor: pointer; white-space: nowrap;
+    transition: all .12s;
+  }
+  .filter-btn:hover { background: var(--bg-secondary); }
+  .filter-btn.active {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    background: var(--cyan-bg);
+  }
+
+  .export-btn {
+    padding: 8px 14px; font-size: 12px; font-weight: 600;
+    font-family: 'Noto Sans KR', sans-serif;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    cursor: pointer; white-space: nowrap;
+    display: flex; align-items: center; gap: 5px;
+    transition: background .12s;
+  }
+  .export-btn:hover { background: var(--bg-secondary); }
+
+  /* TABLE AREA */
+  .table-area {
+    flex: 1;
+    display: flex;
+    gap: 0;
+    min-height: 0;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+  }
+
+  .table-wrap {
+    flex: 1;
+    overflow: auto;
+    min-width: 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead tr th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .05em;
+    color: var(--text-secondary);
+    padding: 11px 12px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  }
+  thead tr th:hover { color: var(--brand); }
+  thead tr th.sort-active { color: var(--brand); }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background .1s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #f0f4ff; }
+  tbody tr.selected { background: rgba(17,187,209,0.07); }
+
+  td {
+    padding: 11px 12px;
+    vertical-align: middle;
+    color: var(--text-primary);
+  }
+  td.muted { color: var(--text-secondary); font-size: 12px; }
+  td.nowrap { white-space: nowrap; }
+  td.subject-cell {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  td.email-cell {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-secondary);
+    font-size: 12px;
+  }
+
+  .checkbox {
+    width: 15px; height: 15px;
+    accent-color: var(--cyan);
+    cursor: pointer;
+  }
+
+  .company-strong { font-weight: 600; color: var(--brand); }
+
+  .tag-country {
+    font-size: 11px;
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 7px;
+    white-space: nowrap;
+  }
+
+  /* STATUS BADGES */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+    letter-spacing: .02em;
+  }
+  .badge-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+  .badge.new    { background: var(--badge-new-bg);    color: var(--badge-new-text); }
+  .badge.new    .badge-dot { background: var(--badge-new-text); }
+  .badge.inprog { background: var(--badge-in-bg);     color: var(--badge-in-text); }
+  .badge.inprog .badge-dot { background: var(--badge-in-text); }
+  .badge.done   { background: var(--badge-done-bg);   color: var(--badge-done-text); }
+  .badge.done   .badge-dot { background: var(--badge-done-text); }
+  .badge.closed { background: var(--badge-closed-bg); color: var(--badge-closed-text); }
+  .badge.closed .badge-dot { background: var(--badge-closed-text); }
+
+  /* ── DETAIL PANEL ── */
+  .detail-panel {
+    width: 0;
+    flex-shrink: 0;
+    background: var(--bg-surface);
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: width .25s ease;
+  }
+  .detail-panel.open { width: 320px; }
+
+  .dp-header {
+    padding: 16px 18px 13px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .dp-id { font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: .06em; }
+  .dp-header-title { font-size: 14px; font-weight: 700; color: var(--text-primary); flex: 1; line-height: 1.3; }
+  .dp-close {
+    font-size: 14px; color: var(--text-tertiary); cursor: pointer;
+    background: none; border: none; padding: 3px 6px; border-radius: 5px;
+    line-height: 1; flex-shrink: 0;
+  }
+  .dp-close:hover { background: var(--bg-secondary); color: var(--text-primary); }
+
+  .dp-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .dp-section { display: flex; flex-direction: column; gap: 0; }
+  .dp-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .10em;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .dp-field { display: flex; flex-direction: column; gap: 2px; margin-bottom: 10px; }
+  .dp-field:last-child { margin-bottom: 0; }
+  .dp-key { font-size: 11px; color: var(--text-tertiary); font-weight: 500; }
+  .dp-val { font-size: 13px; color: var(--text-primary); font-weight: 400; word-break: break-all; }
+  .dp-val.link { color: var(--cyan); }
+  .dp-val.subject { font-weight: 600; }
+
+  .dp-message {
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    padding: 12px 14px;
+    font-size: 12px;
+    line-height: 1.75;
+    color: var(--text-primary);
+  }
+
+  .dp-actions {
+    padding: 14px 18px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .dp-action-label { font-size: 11px; font-weight: 700; color: var(--text-secondary); margin-bottom: 2px; }
+  .dp-status-select {
+    width: 100%; padding: 8px 10px; font-size: 12px; font-weight: 600;
+    font-family: 'Noto Sans KR', sans-serif;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    cursor: pointer; outline: none;
+    transition: border-color .15s;
+  }
+  .dp-status-select:focus { border-color: var(--cyan); }
+  .dp-reply-btn {
+    width: 100%; padding: 10px; font-size: 13px; font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--brand); color: #fff;
+    border: none; border-radius: 8px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    transition: background .15s;
+    letter-spacing: .02em;
+  }
+  .dp-reply-btn:hover { background: var(--brand-light); }
+  .dp-delete-btn {
+    width: 100%; padding: 8px; font-size: 12px; font-weight: 500;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: transparent; color: #c0392b;
+    border: 1px solid rgba(192,57,43,.25); border-radius: 8px;
+    cursor: pointer; transition: background .12s;
+  }
+  .dp-delete-btn:hover { background: rgba(192,57,43,.06); }
+
+  /* PAGINATION */
+  .pagination-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    flex-shrink: 0;
+    margin-bottom: 20px;
+  }
+  .pagination-info { font-size: 12px; color: var(--text-secondary); }
+  .pagination-btns { display: flex; align-items: center; gap: 4px; }
+  .pg-btn {
+    padding: 5px 11px; font-size: 12px; font-weight: 500;
+    font-family: 'Noto Sans KR', sans-serif;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all .1s;
+  }
+  .pg-btn:hover:not(:disabled):not(.active) { background: var(--bg-secondary); }
+  .pg-btn.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .pg-btn:disabled { opacity: .4; cursor: default; }
+
+  /* EMPTY STATE */
+  .empty-state {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--text-tertiary);
+    font-size: 13px;
+  }
+  .empty-state .empty-icon { font-size: 36px; margin-bottom: 12px; opacity: .4; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(2,34,122,0.15); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(2,34,122,0.25); }
+
+  /* ── DASHBOARD ── */
+  .db-grid {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+    gap: 16px;
+    padding: 0 0 24px;
+  }
+  .db-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .db-card-full { grid-column: 1 / -1; }
+  .card-label { font-size: 11px; font-weight: 600; color: var(--text-secondary); letter-spacing: .04em; margin-bottom: 4px; }
+  .card-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+  .card-header { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 16px; }
+  .card-header-text { flex: 1; }
+  .legend-row { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 12px; font-size: 12px; color: var(--text-secondary); }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  .funnel-wrap { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+  .funnel-row { display: flex; align-items: center; gap: 12px; }
+  .funnel-label-group { width: 120px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+  .funnel-label { font-size: 12px; color: var(--text-secondary); }
+  .funnel-count { font-size: 12px; font-weight: 600; color: var(--brand); }
+  .funnel-bar-wrap { flex: 1; background: var(--bg-secondary); border-radius: 4px; height: 28px; overflow: hidden; }
+  .funnel-bar { height: 100%; border-radius: 4px; }
+  .funnel-pct { font-size: 11px; color: var(--text-tertiary); width: 32px; flex-shrink: 0; text-align: right; }
+  .avg-badge {
+    display: flex; align-items: center; gap: 20px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 10px 16px; margin-top: 14px;
+  }
+  .avg-item { display: flex; flex-direction: column; gap: 2px; }
+  .avg-item-label { font-size: 11px; color: var(--text-secondary); }
+  .avg-item-value { font-size: 20px; font-weight: 600; color: var(--brand); }
+  .avg-divider { width: 1px; height: 32px; background: var(--border-strong); flex-shrink: 0; }
+  .period-btns { display: flex; gap: 4px; margin-left: auto; }
+  .period-btn {
+    padding: 4px 10px; font-size: 11px; font-weight: 600;
+    font-family: 'Noto Sans KR', sans-serif;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    background: transparent; color: var(--text-secondary); cursor: pointer;
+    transition: all .12s;
+  }
+  .period-btn.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .period-btn:hover:not(.active) { background: var(--bg-secondary); }
+  #page-inquiry { display: flex; flex-direction: column; flex: 1; min-height: 0; gap: 16px; }
+  .funnel-row-click { cursor: pointer; border-radius: 6px; padding: 2px 4px; margin: -2px -4px; transition: background .12s; }
+  .funnel-row-click:hover { background: rgba(2,34,122,0.05); }
+  .funnel-row-click:hover .funnel-count { color: #0a2f99; }
+
+
+</style>
+</head>
+<body>
+
+<!-- 로그인 화면 -->
+<div id="screen-login">
+<div class="shell">
+
+  <!-- ── LEFT PANEL ── -->
+  <div class="left-panel">
+    <div class="left-center-logo">
+      <div class="lc-brand">NICE D&amp;B</div>
+      <div class="lc-divider"></div>
+      <div class="lc-sub">ESG ADMIN CONSOLE</div>
+    </div>
+    <div class="left-footer">
+      © 2026 NICE D&amp;B Co., Ltd. All rights reserved.
+    </div>
+  </div>
+
+  <!-- ── RIGHT PANEL ── -->
+  <div class="right-panel">
+    <div class="login-box">
+
+      <div class="login-header">
+        <div class="greeting">관리자 전용 페이지</div>
+        <h1>로그인</h1>
+      </div>
+
+      <div class="access-badge">
+        <span class="access-dot"></span>
+        AUTHORIZED PERSONNEL ONLY
+      </div>
+
+      <!-- 에러 메시지 -->
+      <div class="error-msg" id="error-msg">
+        <span class="error-icon">⚠</span>
+        <span id="error-text">아이디 또는 비밀번호가 올바르지 않습니다.</span>
+      </div>
+
+      <!-- 아이디 -->
+      <div class="form-group">
+        <label class="form-label" for="username">아이디</label>
+        <div class="input-wrap">
+          <span class="input-icon">👤</span>
+          <input
+            class="form-input"
+            id="username"
+            type="text"
+            placeholder="관리자 아이디를 입력하세요"
+            autocomplete="username"
+            onkeydown="handleKeydown(event)"
+          >
+        </div>
+      </div>
+
+      <!-- 비밀번호 -->
+      <div class="form-group">
+        <label class="form-label" for="password">비밀번호</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔒</span>
+          <input
+            class="form-input"
+            id="password"
+            type="password"
+            placeholder="비밀번호를 입력하세요"
+            autocomplete="current-password"
+            onkeydown="handleKeydown(event)"
+          >
+          <button class="pw-toggle" onclick="togglePw()" id="pw-toggle" tabindex="-1" aria-label="비밀번호 표시">
+            👁
+          </button>
+        </div>
+      </div>
+
+      <!-- 옵션 -->
+      <div class="form-options">
+        <label class="remember-label">
+          <input type="checkbox" id="remember"> 로그인 상태 유지
+        </label>
+        <a class="forgot-link" href="#">비밀번호 찾기</a>
+      </div>
+
+      <!-- 로그인 버튼 -->
+      <button class="login-btn" id="login-btn" onclick="handleLogin()">
+        <div class="spinner" id="spinner"></div>
+        <span class="btn-text">로그인</span>
+      </button>
+
+      <div class="divider">관리자 계정이 필요하신가요?</div>
+
+      <div style="text-align:center; font-size:12px; color:var(--text-muted); line-height:1.7;">
+        계정 발급은 시스템 담당자에게 문의하세요.<br>
+        <a href="mailto:nathan@nicednb.com" style="color:var(--cyan); text-decoration:none; font-weight:500;">nathan@nicednb.com</a>
+      </div>
+
+      <div class="security-note">
+        <span class="security-icon">🔐</span>
+        SSL 보안 연결로 보호됩니다
+      </div>
+
+    </div>
+
+    <div class="right-footer">
+      NICE D&amp;B ESG Admin Console v1.0
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- 어드민 화면 -->
+<div id="screen-admin" class="app-shell">
+<div class="app-shell">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="brand-name">NICE D&amp;B</div>
+      <div class="brand-sub">ESG ADMIN CONSOLE</div>
+    </div>
+
+    <div class="sidebar-section-label">MAIN</div>
+    <a class="nav-item active" href="#" onclick="showPage('inquiry',this)">
+      <i class="nav-icon">✉</i> 문의 관리
+      <span class="nav-badge" id="sidebar-badge">7</span>
+    </a>
+    <a class="nav-item" href="#" onclick="showPage('dashboard',this)">
+      <i class="nav-icon">◈</i> 대시보드
+    </a>
+
+
+    <hr class="sidebar-divider">
+
+    <div class="sidebar-section-label">관리</div>
+    <a class="nav-item" href="#">
+      <i class="nav-icon">⊙</i> 담당자 관리
+    </a>
+    <a class="nav-item" href="#">
+      <i class="nav-icon">≡</i> 답변 템플릿
+    </a>
+    <a class="nav-item" href="#">
+      <i class="nav-icon">◎</i> 설정
+    </a>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-avatar">관</div>
+      <div class="sidebar-user-info">
+        <div class="user-name">관리자</div>
+        <div class="user-role">Admin</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN AREA ── -->
+  <main class="main-area">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">Contact Us 문의 관리</div>
+      <div class="topbar-meta" id="topbar-date"></div>
+      <button class="topbar-refresh" id="topbar-refresh-btn" onclick="render()">↻ 새로고침</button>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content-body">
+
+      <!-- ── 문의 관리 페이지 ── -->
+      <div id="page-inquiry">
+
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-card accent">
+          <div class="stat-label">전체 문의</div>
+          <div class="stat-value" id="stat-total">—</div>
+          <div class="stat-delta">이번 달 +12</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">신규 (미처리)</div>
+          <div class="stat-value" id="stat-new">—</div>
+          <div class="stat-delta">즉시 확인 필요</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">처리 중</div>
+          <div class="stat-value" id="stat-inprog">—</div>
+          <div class="stat-delta">진행 중인 건</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">완료</div>
+          <div class="stat-value" id="stat-done">—</div>
+          <div class="stat-delta delta-up">이번 달 처리율 84%</div>
+        </div>
+      </div>
+
+      <!-- TOOLBAR -->
+      <div class="toolbar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input
+            class="search-input"
+            id="search-input"
+            type="text"
+            placeholder="기업명, 담당자, 이메일로 검색..."
+          >
+        </div>
+        <button class="filter-btn active" data-filter="all"    onclick="setFilter('all',this)">전체</button>
+        <button class="filter-btn"        data-filter="new"    onclick="setFilter('new',this)">신규</button>
+        <button class="filter-btn"        data-filter="inprog" onclick="setFilter('inprog',this)">처리 중</button>
+        <button class="filter-btn"        data-filter="done"   onclick="setFilter('done',this)">완료</button>
+        <button class="filter-btn"        data-filter="closed" onclick="setFilter('closed',this)">종결</button>
+        <button class="export-btn" onclick="exportCSV()">↓ CSV 내보내기</button>
+      </div>
+
+      <!-- TABLE + DETAIL -->
+      <div class="table-area">
+        <div class="table-wrap">
+          <table id="inquiry-table">
+            <thead>
+              <tr>
+                <th style="width:32px; padding-left:14px;">
+                  <input type="checkbox" class="checkbox" id="chk-all" onchange="toggleAll(this)">
+                </th>
+                <th onclick="sortBy('id')" id="th-id">#</th>
+                <th onclick="sortBy('date')" id="th-date" class="sort-active">접수일 ▾</th>
+                <th onclick="sortBy('company')" id="th-company">기업명</th>
+                <th onclick="sortBy('name')" id="th-name">담당자</th>
+                <th onclick="sortBy('country')" id="th-country">국가</th>
+                <th onclick="sortBy('subject')" id="th-subject">제목</th>
+                <th onclick="sortBy('status')" id="th-status">상태</th>
+                <th id="th-email">이메일</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+          <div id="empty-state" class="empty-state" style="display:none;">
+            <div class="empty-icon">✉</div>
+            검색 결과가 없습니다.
+          </div>
+        </div>
+
+        <!-- DETAIL PANEL -->
+        <aside class="detail-panel" id="detail-panel">
+          <div class="dp-header">
+            <div style="flex:1; min-width:0;">
+              <div class="dp-id" id="dp-id"></div>
+              <div class="dp-header-title" id="dp-title"></div>
+            </div>
+            <button class="dp-close" onclick="closeDetail()">✕</button>
+          </div>
+
+          <div class="dp-body" id="dp-body"></div>
+
+          <div class="dp-actions">
+            <div class="dp-action-label">상태 변경</div>
+            <select class="dp-status-select" id="dp-status-select" onchange="updateStatus()">
+              <option value="new">신규</option>
+              <option value="inprog">처리 중</option>
+              <option value="done">완료</option>
+              <option value="closed">종결</option>
+            </select>
+            <button class="dp-reply-btn">✉&nbsp; 이메일로 답변 발송</button>
+            <button class="dp-delete-btn">삭제</button>
+          </div>
+        </aside>
+      </div>
+
+      <!-- PAGINATION -->
+      <div class="pagination-bar">
+        <div class="pagination-info" id="pg-info"></div>
+        <div class="pagination-btns" id="pg-btns"></div>
+      </div>
+
+      </div><!-- /page-inquiry -->
+
+      <!-- ── 대시보드 페이지 ── -->
+      <div id="page-dashboard" style="display:none; flex:1; overflow-y:auto; padding-bottom:24px;">
+        <div class="db-grid">
+
+          <!-- 국가별 분포 -->
+          <div class="db-card">
+            <div class="card-header">
+              <div class="card-header-text">
+                <div class="card-label">국가별 분포</div>
+                <div class="card-title">문의 접수 국가 Top 8</div>
+              </div>
+            </div>
+            <div class="legend-row">
+              <span class="legend-item"><span class="legend-dot" style="background:#02227a"></span>대한민국</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#11BBD1"></span>해외</span>
+            </div>
+            <div style="position:relative;width:100%;height:280px;">
+              <canvas id="countryChart" role="img" aria-label="국가별 문의 건수 가로 바 차트" style="cursor:pointer;">국가별 문의 건수: 대한민국 26, 일본 5, 독일 4, 싱가포르 3, 미국 2, 중국 2, 태국 2, 기타 3.</canvas>
+            </div>
+          </div>
+
+          <!-- 처리 현황 -->
+          <div class="db-card">
+            <div class="card-header">
+              <div class="card-header-text">
+                <div class="card-label">처리 현황</div>
+                <div class="card-title">상태별 건수</div>
+              </div>
+            </div>
+            <div class="funnel-wrap" id="funnel-wrap"></div>
+            <div class="avg-badge">
+              <div class="avg-item">
+                <span class="avg-item-label">평균 처리 소요일</span>
+                <span class="avg-item-value">3.2일</span>
+              </div>
+              <div class="avg-divider"></div>
+              <div class="avg-item">
+                <span class="avg-item-label">완료율</span>
+                <span class="avg-item-value">71%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 월별 추이 -->
+          <div class="db-card db-card-full">
+            <div class="card-header">
+              <div class="card-header-text">
+                <div class="card-label">월별 접수 추이</div>
+                <div class="card-title">최근 6개월 문의 건수</div>
+              </div>
+              <div class="period-btns">
+                <button class="period-btn active" onclick="setPeriod(6,this)">6개월</button>
+                <button class="period-btn" onclick="setPeriod(12,this)">12개월</button>
+              </div>
+            </div>
+            <div class="legend-row">
+              <span class="legend-item"><span class="legend-dot" style="background:#02227a;border-radius:50%"></span>전체 접수</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#11BBD1;border-radius:50%"></span>완료 처리</span>
+            </div>
+            <div style="position:relative;width:100%;height:220px;">
+              <canvas id="trendChart" role="img" aria-label="최근 6개월 월별 문의 접수 및 완료 건수 라인 차트">월별 접수: 11월 8, 12월 11, 1월 14, 2월 18, 3월 22, 4월 42.</canvas>
+            </div>
+          </div>
+
+        </div><!-- /db-grid -->
+      </div><!-- /page-dashboard -->
+
+    </div><!-- /content-body -->
+  </main>
+</div><!-- /app-shell -->
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+/* ── 로그인 ── */
+const CREDENTIALS = { id: "admin", pw: "password" };
+
+function handleKeydown(e) { if (e.key === "Enter") handleLogin(); }
+
+function togglePw() {
+  const pw = document.getElementById("password");
+  const btn = document.getElementById("pw-toggle");
+  const hidden = pw.type === "password";
+  pw.type = hidden ? "text" : "password";
+  btn.textContent = hidden ? "🙈" : "👁";
+}
+
+function setError(msg) {
+  document.getElementById("error-text").textContent = msg;
+  document.getElementById("error-msg").classList.add("show");
+  document.getElementById("username").classList.add("error");
+  document.getElementById("password").classList.add("error");
+}
+
+function clearError() {
+  document.getElementById("error-msg").classList.remove("show");
+  document.getElementById("username").classList.remove("error");
+  document.getElementById("password").classList.remove("error");
+}
+
+function handleLogin() {
+  clearError();
+  const id = document.getElementById("username").value.trim();
+  const pw = document.getElementById("password").value;
+  if (!id) { setError("아이디를 입력해 주세요."); document.getElementById("username").focus(); return; }
+  if (!pw) { setError("비밀번호를 입력해 주세요."); document.getElementById("password").focus(); return; }
+  const btn = document.getElementById("login-btn");
+  btn.classList.add("loading");
+  setTimeout(() => {
+    btn.classList.remove("loading");
+    if (id === CREDENTIALS.id && pw === CREDENTIALS.pw) {
+      document.getElementById("screen-login").style.display = "none";
+      const admin = document.getElementById("screen-admin");
+      admin.style.display = "flex";
+      admin.style.height = "100vh";
+      admin.style.overflow = "hidden";
+      initAdmin();
+    } else {
+      setError("아이디 또는 비밀번호가 올바르지 않습니다.");
+      document.getElementById("password").value = "";
+      document.getElementById("password").focus();
+    }
+  }, 900);
+}
+
+["username", "password"].forEach(id => {
+  document.getElementById(id).addEventListener("input", clearError);
+});
+
+/* ── 어드민 ── */
+
+/* ── DATA ── */
+const STATUSES = {
+  new:    { label: '신규',    cls: 'new' },
+  inprog: { label: '처리 중', cls: 'inprog' },
+  done:   { label: '완료',    cls: 'done' },
+  closed: { label: '종결',    cls: 'closed' },
+};
+
+let DATA = [
+  { id:'INQ-042', company:'Hanwha Group',         name:'김민준',    country:'대한민국', email:'minjun@hanwha.com',        phone:'02-1234-5678',    subject:'ESG 평가 도입 검토',         status:'new',    date:'2026-04-10', msg:'안녕하세요. ESG 평가 서비스에 대해 자세한 안내를 요청드립니다. 당사는 상장을 준비 중이며 GHG 범위별 배출량 측정 관련 지원이 필요합니다.' },
+  { id:'INQ-041', company:'Doosan Enerbility',    name:'이서연',    country:'대한민국', email:'seoyeon@doosan.com',        phone:'02-2345-6789',    subject:'탄소중립 로드맵 파트너십',    status:'inprog', date:'2026-04-09', msg:'탄소중립 로드맵 수립을 위해 파트너십을 맺고 싶습니다. 구체적인 서비스 범위와 견적을 받고 싶으니 담당자 연결 부탁드립니다.' },
+  { id:'INQ-040', company:'Mitsui & Co.',         name:'Tanaka Yui',country:'일본',    email:'yui.t@mitsui.co.jp',       phone:'+81-3-0000-1111', subject:'ESG Data API 연동 문의',     status:'new',    date:'2026-04-09', msg:'We are interested in integrating ESG data through your API. Please provide technical documentation and pricing details.' },
+  { id:'INQ-039', company:'Hyundai Motor',        name:'박지호',    country:'대한민국', email:'jiho.park@hyundai.com',    phone:'031-000-0000',    subject:'공급망 ESG 실사 서비스',      status:'done',   date:'2026-04-08', msg:'공급망 협력사 ESG 실사 일괄 처리 서비스 도입을 검토 중입니다. 협력사 규모 및 가격 체계를 안내해 주시기 바랍니다.' },
+  { id:'INQ-038', company:'CATL Europe',          name:'Wei Chen',  country:'독일',    email:'wchen@catl.com',           phone:'+49-89-0000-0001',subject:'Battery ESG Rating',         status:'new',    date:'2026-04-08', msg:'We need ESG rating services focused on battery supply chains for our EU market compliance. Please share a proposal.' },
+  { id:'INQ-037', company:'Lotte Chemical',       name:'최수빈',    country:'대한민국', email:'subin@lottechem.com',      phone:'02-3456-7890',    subject:'화학업종 ESG 지표 커스텀',    status:'inprog', date:'2026-04-07', msg:'화학업종 특화 ESG 지표 개발 및 커스텀 보고서 제공 가능한지 궁금합니다. 기존 MSCI 프레임워크와의 연동도 문의드립니다.' },
+  { id:'INQ-036', company:'ThaiBev',              name:'Somchai K.',country:'태국',    email:'somchai@thaibev.com',      phone:'+66-2-000-0001',  subject:'ASEAN ESG Partnership',      status:'new',    date:'2026-04-07', msg:'We are exploring ESG certification partnerships across ASEAN markets. Please contact our CSR team at the earliest convenience.' },
+  { id:'INQ-035', company:'SK Hynix',             name:'정윤아',    country:'대한민국', email:'yuna.j@skhynix.com',      phone:'031-5000-0000',   subject:'반도체 ESG 이슈 대응',         status:'done',   date:'2026-04-05', msg:'반도체 공정 내 환경 지표 산정 기준 및 Scope 3 배출량 산정 방법에 대해 문의드립니다.' },
+  { id:'INQ-034', company:'Vale S.A.',            name:'Ana Lima',  country:'브라질',  email:'a.lima@vale.com',          phone:'+55-21-0000-0000',subject:'Mining Sector ESG Audit',    status:'closed', date:'2026-04-03', msg:'Requesting ESG audit services for our iron ore mining operations in compliance with global sustainability standards.' },
+  { id:'INQ-033', company:'POSCO',                name:'강태양',    country:'대한민국', email:'taeyang@posco.com',        phone:'054-220-0000',    subject:'철강 탄소배출 데이터 관리',    status:'done',   date:'2026-04-01', msg:'POSCO 그룹사 전체 탄소배출 데이터 통합 관리 플랫폼 도입을 검토 중입니다. 기업 규모별 맞춤형 솔루션을 안내해 주세요.' },
+  { id:'INQ-032', company:'Singapore Airlines',   name:'Liu Mei',   country:'싱가포르',email:'l.mei@singaporeair.com',   phone:'+65-6000-0001',   subject:'Aviation ESG Certification', status:'done',   date:'2026-03-30', msg:'We are seeking ESG certification support for our aviation sustainability report aligned with TCFD and GRI standards.' },
+  { id:'INQ-031', company:'삼성물산',              name:'오재현',    country:'대한민국', email:'jaehyun.oh@samsung.com',  phone:'02-2145-0000',    subject:'건설업 ESG 평가 기준',         status:'inprog', date:'2026-03-28', msg:'건설 및 부동산 부문 ESG 평가 기준이 궁금합니다. 특히 환경 영향 평가 항목과 사회 지표 연계 방안을 알고 싶습니다.' },
+];
+
+/* ── STATE ── */
+let currentFilter = 'all';
+let currentSort   = { key: 'date', asc: false };
+let selectedId    = null;
+let currentPage   = 1;
+const PAGE_SIZE   = 8;
+
+/* ── TOPBAR DATE ── */
+
+/* ── HELPERS ── */
+function getFiltered() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  return DATA
+    .filter(r => currentFilter === 'all' || r.status === currentFilter)
+    .filter(r => !q ||
+      r.company.toLowerCase().includes(q) ||
+      r.name.toLowerCase().includes(q) ||
+      r.email.toLowerCase().includes(q) ||
+      r.subject.toLowerCase().includes(q)
+    )
+    .sort((a, b) => {
+      const va = a[currentSort.key] || '', vb = b[currentSort.key] || '';
+      return currentSort.asc ? va.localeCompare(vb, 'ko') : vb.localeCompare(va, 'ko');
+    });
+}
+
+function badgeHtml(status) {
+  const s = STATUSES[status] || STATUSES.new;
+  return `<span class="badge ${s.cls}"><span class="badge-dot"></span>${s.label}</span>`;
+}
+
+/* ── RENDER TABLE ── */
+function render() {
+  const data  = getFiltered();
+  const total = data.length;
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  if (currentPage > totalPages) currentPage = totalPages;
+
+  const page = data.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
+  const tbody = document.getElementById('tbody');
+  const empty = document.getElementById('empty-state');
+
+  if (page.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+  } else {
+    empty.style.display = 'none';
+    tbody.innerHTML = page.map(r => `
+      <tr onclick="openDetail('${r.id}')" class="${selectedId === r.id ? 'selected' : ''}">
+        <td style="padding-left:14px;">
+          <input type="checkbox" class="checkbox row-chk" onclick="event.stopPropagation()">
+        </td>
+        <td class="muted nowrap">${r.id}</td>
+        <td class="muted nowrap">${r.date}</td>
+        <td><span class="company-strong">${r.company}</span></td>
+        <td class="nowrap">${r.name}</td>
+        <td><span class="tag-country">${r.country}</span></td>
+        <td class="subject-cell">${r.subject}</td>
+        <td>${badgeHtml(r.status)}</td>
+        <td class="email-cell">${r.email}</td>
+      </tr>
+    `).join('');
+  }
+
+  /* Pagination */
+  document.getElementById('pg-info').textContent =
+    `전체 ${total}건 중 ${Math.min((currentPage-1)*PAGE_SIZE+1, total)}–${Math.min(currentPage*PAGE_SIZE, total)}건 표시`;
+
+  let pgHtml = `<button class="pg-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>`;
+  for (let i = 1; i <= totalPages; i++) {
+    pgHtml += `<button class="pg-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+  }
+  pgHtml += `<button class="pg-btn" onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>›</button>`;
+  document.getElementById('pg-btns').innerHTML = pgHtml;
+
+  updateStats();
+}
+
+function goPage(p) {
+  const tp = Math.max(1, Math.ceil(getFiltered().length / PAGE_SIZE));
+  if (p >= 1 && p <= tp) { currentPage = p; render(); }
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent  = DATA.length;
+  document.getElementById('stat-new').textContent    = DATA.filter(r => r.status === 'new').length;
+  document.getElementById('stat-inprog').textContent = DATA.filter(r => r.status === 'inprog').length;
+  document.getElementById('stat-done').textContent   = DATA.filter(r => r.status === 'done').length;
+  document.getElementById('sidebar-badge').textContent = DATA.filter(r => r.status === 'new').length;
+}
+
+/* ── FILTER / SORT / SEARCH ── */
+function setFilter(f, btn) {
+  currentFilter = f;
+  currentPage   = 1;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function sortBy(key) {
+  if (currentSort.key === key) {
+    currentSort.asc = !currentSort.asc;
+  } else {
+    currentSort.key = key;
+    currentSort.asc = true;
+  }
+  document.querySelectorAll('thead th[id^="th-"]').forEach(th => th.classList.remove('sort-active'));
+  const thEl = document.getElementById('th-' + key);
+  if (thEl) thEl.classList.add('sort-active');
+  render();
+}
+
+function toggleAll(chk) {
+  document.querySelectorAll('.row-chk').forEach(c => c.checked = chk.checked);
+}
+
+
+/* ── DETAIL PANEL ── */
+function openDetail(id) {
+  selectedId = id;
+  const r = DATA.find(x => x.id === id);
+  if (!r) return;
+
+  document.getElementById('detail-panel').classList.add('open');
+  document.getElementById('dp-id').textContent = r.id;
+  document.getElementById('dp-title').textContent = r.subject;
+
+  document.getElementById('dp-body').innerHTML = `
+    <div class="dp-section">
+      <div class="dp-section-label">기업 정보</div>
+      <div class="dp-field">
+        <span class="dp-key">기업명</span>
+        <span class="dp-val">${r.company}</span>
+      </div>
+      <div class="dp-field">
+        <span class="dp-key">담당자</span>
+        <span class="dp-val">${r.name}</span>
+      </div>
+      <div class="dp-field">
+        <span class="dp-key">국가 / 지역</span>
+        <span class="dp-val">${r.country}</span>
+      </div>
+    </div>
+    <div class="dp-section">
+      <div class="dp-section-label">연락처</div>
+      <div class="dp-field">
+        <span class="dp-key">이메일</span>
+        <span class="dp-val link">${r.email}</span>
+      </div>
+      <div class="dp-field">
+        <span class="dp-key">전화번호</span>
+        <span class="dp-val">${r.phone}</span>
+      </div>
+    </div>
+    <div class="dp-section">
+      <div class="dp-section-label">문의 내용</div>
+      <div class="dp-field">
+        <span class="dp-key">접수일</span>
+        <span class="dp-val">${r.date}</span>
+      </div>
+      <div class="dp-field">
+        <span class="dp-key">제목</span>
+        <span class="dp-val subject">${r.subject}</span>
+      </div>
+      <div class="dp-message">${r.msg}</div>
+    </div>
+  `;
+
+  document.getElementById('dp-status-select').value = r.status;
+  render();
+}
+
+function closeDetail() {
+  selectedId = null;
+  document.getElementById('detail-panel').classList.remove('open');
+  render();
+}
+
+function updateStatus() {
+  const r = DATA.find(x => x.id === selectedId);
+  if (r) {
+    r.status = document.getElementById('dp-status-select').value;
+    render();
+    // re-render detail badge area if open
+    openDetail(selectedId);
+  }
+}
+
+/* ── CSV EXPORT ── */
+function exportCSV() {
+  const data = getFiltered();
+  const cols = ['id','date','company','name','country','email','phone','subject','status','msg'];
+  const header = ['번호','접수일','기업명','담당자','국가','이메일','연락처','제목','상태','문의내용'];
+  const rows = [header, ...data.map(r => cols.map(k => {
+    const v = String(r[k] || '').replace(/"/g, '""');
+    return `"${v}"`;
+  }))];
+  const csv = '\uFEFF' + rows.map(r => r.join(',')).join('\n'); // BOM for Excel
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'nicednb_contact_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+}
+
+
+/* ── DRILL-DOWN NAVIGATION ── */
+function navigateWithFilter(type, value) {
+  if (type === 'status') {
+    currentFilter = value;
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.filter === value);
+    });
+    document.getElementById('search-input').value = '';
+  } else if (type === 'country') {
+    currentFilter = 'all';
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.filter === 'all');
+    });
+    document.getElementById('search-input').value = value === '기타' ? '' : value;
+  }
+  currentPage = 1;
+  render();
+  showPage('inquiry', document.querySelector('.nav-item'));
+}
+
+/* ── PAGE SWITCH ── */
+let chartsInitialized = false;
+let trendChartInstance = null;
+
+const allMonths6  = ['11월','12월','1월','2월','3월','4월'];
+const allTotal6   = [8, 11, 14, 18, 22, 42];
+const allDone6    = [6, 9, 11, 14, 18, 30];
+const allMonths12 = ['5월','6월','7월','8월','9월','10월','11월','12월','1월','2월','3월','4월'];
+const allTotal12  = [5, 6, 7, 9, 10, 8, 8, 11, 14, 18, 22, 42];
+const allDone12   = [4, 5, 5, 7, 8, 6, 6, 9, 11, 14, 18, 30];
+
+function showPage(page, navEl) {
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  if (navEl) navEl.classList.add('active');
+
+  const inquiry   = document.getElementById('page-inquiry');
+  const dashboard = document.getElementById('page-dashboard');
+  const refreshBtn = document.getElementById('topbar-refresh-btn');
+  const title      = document.getElementById('topbar-title');
+
+  if (page === 'dashboard') {
+    inquiry.style.display   = 'none';
+    dashboard.style.display = 'block';
+    title.textContent       = '대시보드';
+    refreshBtn.style.display = 'none';
+    if (!chartsInitialized) initDashboardCharts();
+  } else {
+    inquiry.style.display   = 'flex';
+    dashboard.style.display = 'none';
+    title.textContent       = 'Contact Us 문의 관리';
+    refreshBtn.style.display = '';
+  }
+}
+
+function initDashboardCharts() {
+  chartsInitialized = true;
+
+  const isDark  = matchMedia('(prefers-color-scheme: dark)').matches;
+  const textCol = isDark ? 'rgba(255,255,255,0.55)' : 'rgba(26,35,64,0.55)';
+  const gridCol = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(2,34,122,0.07)';
+
+  /* 국가별 바 차트 */
+  new Chart(document.getElementById('countryChart'), {
+    type: 'bar',
+    data: {
+      labels: ['대한민국','일본','독일','싱가포르','미국','중국','태국','기타'],
+      datasets: [{
+        label: '문의 건수',
+        data: [26, 5, 4, 3, 2, 2, 2, 3],
+        backgroundColor: ['#02227a','#11BBD1','#11BBD1','#11BBD1','#11BBD1','#11BBD1','#11BBD1','#11BBD1'],
+        borderRadius: 4,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.x}건` } }
+      },
+      scales: {
+        x: { grid: { color: gridCol }, ticks: { color: textCol, font: { size: 11 }, stepSize: 5 }, border: { display: false } },
+        y: { grid: { display: false }, ticks: { color: textCol, font: { size: 12 } }, border: { display: false } }
+      },
+      onClick: (evt, elements) => {
+        if (!elements.length) return;
+        const label = ['대한민국','일본','독일','싱가포르','미국','중국','태국','기타'][elements[0].index];
+        navigateWithFilter('country', label);
+      }
+    }
+  });
+
+  /* 처리 현황 퍼널 */
+  const funnelData = [
+    { label: '신규',    status: 'new',    count: DATA.filter(r=>r.status==='new').length,    color: '#11BBD1' },
+    { label: '처리 중', status: 'inprog', count: DATA.filter(r=>r.status==='inprog').length, color: '#EF9F27' },
+    { label: '완료',    status: 'done',   count: DATA.filter(r=>r.status==='done').length,   color: '#1D9E75' },
+    { label: '종결',    status: 'closed', count: DATA.filter(r=>r.status==='closed').length, color: '#888780' },
+  ];
+  const totalF = funnelData.reduce((s, d) => s + d.count, 0);
+  const fw = document.getElementById('funnel-wrap');
+  fw.innerHTML = '';
+  funnelData.forEach(d => {
+    const pct = totalF > 0 ? Math.round(d.count / totalF * 100) : 0;
+    fw.innerHTML += `
+      <div class="funnel-row funnel-row-click" onclick="navigateWithFilter('status', '${d.status}')" title="${d.label} 문의 보기">
+        <div class="funnel-label-group">
+          <span class="funnel-label">${d.label}</span>
+          <span class="funnel-count">[${d.count}건]</span>
+        </div>
+        <div class="funnel-bar-wrap">
+          <div class="funnel-bar" style="width:${pct}%;background:${d.color}"></div>
+        </div>
+        <span class="funnel-pct">${pct}%</span>
+      </div>`;
+  });
+
+  /* 월별 추이 라인 차트 */
+  trendChartInstance = new Chart(document.getElementById('trendChart'), {
+    type: 'line',
+    data: {
+      labels: allMonths6,
+      datasets: [
+        { label: '전체 접수', data: allTotal6, borderColor: '#02227a', backgroundColor: 'rgba(2,34,122,0.08)', fill: true, tension: 0.35, pointBackgroundColor: '#02227a', pointRadius: 4, borderWidth: 2 },
+        { label: '완료 처리', data: allDone6,  borderColor: '#11BBD1', backgroundColor: 'rgba(17,187,209,0.07)', fill: true, tension: 0.35, pointBackgroundColor: '#11BBD1', pointRadius: 4, borderWidth: 2, borderDash: [5,3] }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: gridCol }, ticks: { color: textCol, font: { size: 11 }, autoSkip: false }, border: { display: false } },
+        y: { grid: { color: gridCol }, ticks: { color: textCol, font: { size: 11 }, stepSize: 10 }, border: { display: false }, min: 0 }
+      }
+    }
+  });
+}
+
+function setPeriod(months, btn) {
+  document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (!trendChartInstance) return;
+  trendChartInstance.data.labels = months === 6 ? allMonths6 : allMonths12;
+  trendChartInstance.data.datasets[0].data = months === 6 ? allTotal6 : allTotal12;
+  trendChartInstance.data.datasets[1].data = months === 6 ? allDone6  : allDone12;
+  trendChartInstance.update();
+}
+
+
+
+function initAdmin() {
+  document.getElementById("topbar-date").textContent =
+    new Date().toLocaleDateString("ko-KR", { year:"numeric", month:"long", day:"numeric" }) + " 기준";
+  document.getElementById("search-input").addEventListener("input", () => {
+    currentPage = 1; render();
+  });
+  render();
+}
+</script>
+</body>
+</html>
