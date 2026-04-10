@@ -7,404 +7,63 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── 공통 ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-#screen-login { display: flex; min-height: 100vh; }
-#screen-admin { display: none; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+#screen-login{display:flex;min-height:100vh;}
+#screen-admin{display:none;}
 
 /* ── 로그인 ── */
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --brand:       #02227a;
-    --brand-light: #0a2f99;
-    --brand-dark:  #011550;
-    --cyan:        #11BBD1;
-    --cyan-dim:    rgba(17,187,209,0.18);
-    --white:       #ffffff;
-    --gray-light:  #f0f2f8;
-    --text:        #1a2340;
-    --text-muted:  #6b7a99;
-    --border:      rgba(2,34,122,0.14);
-    --error:       #c0392b;
-    --error-bg:    rgba(192,57,43,0.07);
-  }
-
-  html, body {
-    height: 100%;
-    font-family: 'Noto Sans KR', sans-serif;
-    background: var(--gray-light);
-    color: var(--text);
-  }
-
-  /* ── LAYOUT ── */
-  .shell {
-    display: grid;
-    grid-template-columns: 1fr 480px;
-    min-height: 100vh;
-  }
-
-  /* ── LEFT PANEL ── */
-  .left-panel {
-    background: var(--brand);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 48px 56px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* 배경 장식 원 */
-  .left-panel::before {
-    content: '';
-    position: absolute;
-    width: 520px; height: 520px;
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.06);
-    top: -160px; right: -160px;
-    pointer-events: none;
-  }
-  .left-panel::after {
-    content: '';
-    position: absolute;
-    width: 360px; height: 360px;
-    border-radius: 50%;
-    border: 1px solid rgba(17,187,209,0.12);
-    bottom: -100px; left: -80px;
-    pointer-events: none;
-  }
-
-  .left-logo {
-    position: relative; z-index: 1;
-  }
-  .left-logo .brand-name {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: .08em;
-  }
-  .left-logo .brand-divider {
-    width: 32px; height: 2px;
-    background: var(--cyan);
-    border-radius: 2px;
-    margin: 10px 0 12px;
-  }
-  .left-logo .brand-sub {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .14em;
-    color: rgba(255,255,255,.40);
-  }
-
-  .left-content {
-    position: relative; z-index: 1;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 48px 0;
-  }
-  .left-eyebrow {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .16em;
-    color: var(--cyan);
-    margin-bottom: 16px;
-  }
-  .left-headline {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 36px;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1.25;
-    margin-bottom: 20px;
-  }
-  .left-headline em {
-    font-style: normal;
-    color: var(--cyan);
-  }
-  .left-desc {
-    font-size: 13px;
-    line-height: 1.8;
-    color: rgba(255,255,255,.50);
-    max-width: 380px;
-  }
-
-  /* 통계 카드 */
-  .left-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-top: 40px;
-  }
-  .stat-pill {
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.10);
-    border-radius: 10px;
-    padding: 14px 16px;
-  }
-  .stat-pill .num {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1;
-  }
-  .stat-pill .num span { color: var(--cyan); font-size: 14px; }
-  .stat-pill .lbl {
-    font-size: 11px;
-    color: rgba(255,255,255,.38);
-    margin-top: 5px;
-    letter-spacing: .02em;
-  }
-
-  .left-footer {
-    position: relative; z-index: 1;
-    font-size: 11px;
-    color: rgba(255,255,255,.22);
-    letter-spacing: .04em;
-  }
-
-  /* ── RIGHT PANEL (LOGIN FORM) ── */
-  .right-panel {
-    background: var(--white);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 48px 56px;
-    border-left: 1px solid var(--border);
-  }
-
-  .login-box {
-    width: 100%;
-    max-width: 340px;
-  }
-
-  .login-header { margin-bottom: 36px; }
-  .login-header .greeting {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-  }
-  .login-header h1 {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--brand);
-    letter-spacing: -.01em;
-  }
-
-  /* FORM */
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 16px;
-  }
-  .form-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-muted);
-    letter-spacing: .03em;
-  }
-  .input-wrap { position: relative; }
-  .input-icon {
-    position: absolute;
-    left: 13px; top: 50%;
-    transform: translateY(-50%);
-    font-size: 15px;
-    color: var(--text-muted);
-    pointer-events: none;
-    line-height: 1;
-  }
-  .form-input {
-    width: 100%;
-    padding: 11px 14px 11px 38px;
-    font-size: 13px;
-    font-family: 'Noto Sans KR', sans-serif;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: var(--gray-light);
-    color: var(--text);
-    outline: none;
-    transition: border-color .15s, background .15s;
-  }
-  .form-input::placeholder { color: #b0bace; }
-  .form-input:focus {
-    border-color: var(--cyan);
-    background: #fff;
-    box-shadow: 0 0 0 3px rgba(17,187,209,0.10);
-  }
-  .form-input.error { border-color: var(--error); background: var(--error-bg); }
-
-  /* 비밀번호 토글 */
-  .pw-toggle {
-    position: absolute;
-    right: 13px; top: 50%;
-    transform: translateY(-50%);
-    background: none; border: none;
-    cursor: pointer; color: var(--text-muted);
-    font-size: 14px; padding: 0; line-height: 1;
-    transition: color .12s;
-  }
-  .pw-toggle:hover { color: var(--brand); }
-
-  .form-options {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
-  }
-  .remember-label {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 12px;
-    color: var(--text-muted);
-    cursor: pointer;
-    user-select: none;
-  }
-  .remember-label input[type="checkbox"] {
-    width: 15px; height: 15px;
-    accent-color: var(--cyan);
-    cursor: pointer;
-  }
-  .forgot-link {
-    font-size: 12px;
-    color: var(--cyan);
-    text-decoration: none;
-    font-weight: 500;
-    transition: opacity .12s;
-  }
-  .forgot-link:hover { opacity: .75; }
-
-  /* 에러 메시지 */
-  .error-msg {
-    display: none;
-    align-items: center;
-    gap: 7px;
-    background: var(--error-bg);
-    border: 1px solid rgba(192,57,43,.18);
-    border-radius: 8px;
-    padding: 10px 13px;
-    font-size: 12px;
-    color: var(--error);
-    margin-bottom: 16px;
-  }
-  .error-msg.show { display: flex; }
-  .error-icon { font-size: 14px; flex-shrink: 0; }
-
-  /* 로그인 버튼 */
-  .login-btn {
-    width: 100%;
-    padding: 13px;
-    font-size: 14px;
-    font-weight: 700;
-    font-family: 'Noto Sans KR', sans-serif;
-    background: var(--brand);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    letter-spacing: .03em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: background .15s, transform .1s;
-    position: relative;
-    overflow: hidden;
-  }
-  .login-btn:hover { background: var(--brand-light); }
-  .login-btn:active { transform: scale(.99); }
-  .login-btn.loading { pointer-events: none; opacity: .8; }
-
-  /* 로딩 스피너 */
-  .spinner {
-    display: none;
-    width: 16px; height: 16px;
-    border: 2px solid rgba(255,255,255,.3);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin .7s linear infinite;
-  }
-  .login-btn.loading .spinner { display: block; }
-  .login-btn.loading .btn-text { opacity: .6; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* 구분선 */
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 24px 0;
-    font-size: 11px;
-    color: #c5cde0;
-  }
-  .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* 보안 배지 */
-  .security-note {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    font-size: 11px;
-    color: #b0bace;
-    margin-top: 32px;
-  }
-  .security-icon { font-size: 13px; }
-
-  /* 접근 제한 배지 */
-  .access-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(2,34,122,0.06);
-    border: 1px solid rgba(2,34,122,0.12);
-    border-radius: 20px;
-    padding: 5px 12px;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--brand);
-    letter-spacing: .04em;
-    margin-bottom: 28px;
-  }
-  .access-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--cyan);
-    animation: pulse 2s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: .5; transform: scale(.8); }
-  }
-
-  /* 하단 저작권 */
-  .right-footer {
-    margin-top: auto;
-    padding-top: 32px;
-    font-size: 11px;
-    color: #c5cde0;
-    text-align: center;
-    width: 100%;
-  }
-
-  /* 반응형 */
-  @media (max-width: 860px) {
-    .shell { grid-template-columns: 1fr; }
-    .left-panel { display: none; }
-    .right-panel { padding: 40px 28px; }
-  }
-
+:root{
+  --brand:#02227a;--brand-light:#0a2f99;--brand-dark:#011550;
+  --cyan:#11BBD1;--white:#ffffff;--gray-light:#f0f2f8;
+  --text:#1a2340;--text-muted:#6b7a99;--border:rgba(2,34,122,0.14);
+  --error:#c0392b;--error-bg:rgba(192,57,43,0.07);
+}
+html,body{height:100%;font-family:'Noto Sans KR',sans-serif;background:var(--gray-light);color:var(--text);}
+.shell{display:grid;grid-template-columns:1fr 480px;min-height:100vh;}
+.left-panel{background:var(--brand);display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:48px 56px;position:relative;overflow:hidden;}
+.left-panel::before{content:'';position:absolute;width:520px;height:520px;border-radius:50%;border:1px solid rgba(255,255,255,0.06);top:-160px;right:-160px;pointer-events:none;}
+.left-panel::after{content:'';position:absolute;width:360px;height:360px;border-radius:50%;border:1px solid rgba(17,187,209,0.12);bottom:-100px;left:-80px;pointer-events:none;}
+.left-center-logo{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;}
+.lc-brand{font-family:'Montserrat',sans-serif;font-size:36px;font-weight:300;color:#fff;letter-spacing:.08em;}
+.lc-divider{width:48px;height:3px;background:var(--cyan);border-radius:2px;margin:18px 0 16px;}
+.lc-sub{font-size:13px;font-weight:600;letter-spacing:.20em;color:rgba(255,255,255,.40);}
+.left-footer{position:relative;z-index:1;font-size:11px;color:rgba(255,255,255,.22);letter-spacing:.04em;text-align:center;}
+.right-panel{background:var(--white);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:48px 56px;border-left:1px solid var(--border);}
+.login-box{width:100%;max-width:340px;}
+.login-header{margin-bottom:36px;}
+.login-header .greeting{font-size:13px;color:var(--text-muted);margin-bottom:6px;}
+.login-header h1{font-size:24px;font-weight:700;color:var(--brand);letter-spacing:-.01em;}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.form-label{font-size:12px;font-weight:600;color:var(--text-muted);letter-spacing:.03em;}
+.input-wrap{position:relative;}
+.input-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;color:var(--text-muted);pointer-events:none;line-height:1;}
+.form-input{width:100%;padding:11px 14px 11px 38px;font-size:13px;font-family:'Noto Sans KR',sans-serif;border:1px solid var(--border);border-radius:8px;background:var(--gray-light);color:var(--text);outline:none;transition:border-color .15s,background .15s;}
+.form-input::placeholder{color:#b0bace;}
+.form-input:focus{border-color:var(--cyan);background:#fff;box-shadow:0 0 0 3px rgba(17,187,209,0.10);}
+.form-input.error{border-color:var(--error);background:var(--error-bg);}
+.pw-toggle{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:14px;padding:0;line-height:1;}
+.form-options{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.remember-label{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-muted);cursor:pointer;user-select:none;}
+.remember-label input[type="checkbox"]{width:15px;height:15px;accent-color:var(--cyan);}
+.forgot-link{font-size:12px;color:var(--cyan);text-decoration:none;font-weight:500;}
+.error-msg{display:none;align-items:center;gap:7px;background:var(--error-bg);border:1px solid rgba(192,57,43,.18);border-radius:8px;padding:10px 13px;font-size:12px;color:var(--error);margin-bottom:16px;}
+.error-msg.show{display:flex;}
+.error-icon{font-size:14px;flex-shrink:0;}
+.login-btn{width:100%;padding:13px;font-size:14px;font-weight:700;font-family:'Noto Sans KR',sans-serif;background:var(--brand);color:#fff;border:none;border-radius:8px;cursor:pointer;letter-spacing:.03em;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s,transform .1s;position:relative;overflow:hidden;}
+.login-btn:hover{background:var(--brand-light);}
+.login-btn.loading{pointer-events:none;opacity:.8;}
+.spinner{display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;}
+.login-btn.loading .spinner{display:block;}
+.login-btn.loading .btn-text{opacity:.6;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.divider{display:flex;align-items:center;gap:12px;margin:24px 0;font-size:11px;color:#c5cde0;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.security-note{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:#b0bace;margin-top:32px;}
+.access-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(2,34,122,0.06);border:1px solid rgba(2,34,122,0.12);border-radius:20px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--brand);letter-spacing:.04em;margin-bottom:28px;}
+.access-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+.right-footer{margin-top:auto;padding-top:32px;font-size:11px;color:#c5cde0;text-align:center;width:100%;}
+@media(max-width:860px){.shell{grid-template-columns:1fr;}.left-panel{display:none;}.right-panel{padding:40px 28px;}}
 
 /* ── 어드민 ── */
 
@@ -968,6 +627,7 @@
 .funnel-row-click{cursor:pointer;border-radius:6px;padding:2px 4px;margin:-2px -4px;transition:background .12s;}
 .funnel-row-click:hover{background:rgba(2,34,122,0.05);}
 .funnel-row-click:hover .funnel-count{color:#0a2f99;}
+#page-inquiry{display:flex;flex-direction:column;flex:1;min-height:0;gap:16px;}
 </style>
 </head>
 <body>
@@ -989,10 +649,7 @@
           <div class="greeting">관리자 전용 페이지</div>
           <h1>로그인</h1>
         </div>
-        <div class="access-badge">
-          <span class="access-dot"></span>
-          AUTHORIZED PERSONNEL ONLY
-        </div>
+        <div class="access-badge"><span class="access-dot"></span>AUTHORIZED PERSONNEL ONLY</div>
         <div class="error-msg" id="error-msg">
           <span class="error-icon">⚠</span>
           <span id="error-text">아이디 또는 비밀번호가 올바르지 않습니다.</span>
@@ -1017,7 +674,7 @@
           <a class="forgot-link" href="#">비밀번호 찾기</a>
         </div>
         <button class="login-btn" id="login-btn" onclick="handleLogin()">
-          <div class="spinner" id="spinner"></div>
+          <div class="spinner"></div>
           <span class="btn-text">로그인</span>
         </button>
         <div class="divider">관리자 계정이 필요하신가요?</div>
@@ -1025,10 +682,7 @@
           계정 발급은 시스템 담당자에게 문의하세요.<br>
           <a href="mailto:nathan@nicednb.com" style="color:var(--cyan);text-decoration:none;font-weight:500;">nathan@nicednb.com</a>
         </div>
-        <div class="security-note">
-          <span class="security-icon">🔐</span>
-          SSL 보안 연결로 보호됩니다
-        </div>
+        <div class="security-note"><span style="font-size:13px;">🔐</span> SSL 보안 연결로 보호됩니다</div>
       </div>
       <div class="right-footer">NICE D&amp;B ESG Admin Console v1.0</div>
     </div>
@@ -1038,38 +692,25 @@
 <!-- ── 어드민 화면 ── -->
 <div id="screen-admin" class="app-shell">
 
-  <!-- ── SIDEBAR ── -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="brand-name">NICE D&amp;B</div>
       <div class="brand-sub">ESG ADMIN CONSOLE</div>
     </div>
-
     <div class="sidebar-section-label">MAIN</div>
-    <a class="nav-item active" href="#">
+    <a class="nav-item active" href="#" onclick="showPage('inquiry',this)">
       <i class="nav-icon">✉</i> 문의 관리
-      <span class="nav-badge" id="sidebar-badge">7</span>
+      <span class="nav-badge" id="sidebar-badge">0</span>
     </a>
-    <a class="nav-item" href="#">
+    <a class="nav-item" href="#" onclick="showPage('dashboard',this)">
       <i class="nav-icon">◈</i> 대시보드
     </a>
-    <a class="nav-item" href="#">
-      <i class="nav-icon">◉</i> 분석 · 통계
-    </a>
-
     <hr class="sidebar-divider">
-
     <div class="sidebar-section-label">관리</div>
-    <a class="nav-item" href="#">
-      <i class="nav-icon">⊙</i> 담당자 관리
-    </a>
-    <a class="nav-item" href="#">
-      <i class="nav-icon">≡</i> 답변 템플릿
-    </a>
-    <a class="nav-item" href="#">
-      <i class="nav-icon">◎</i> 설정
-    </a>
-
+    <a class="nav-item" href="#"><i class="nav-icon">⊙</i> 담당자 관리</a>
+    <a class="nav-item" href="#"><i class="nav-icon">≡</i> 답변 템플릿</a>
+    <a class="nav-item" href="#"><i class="nav-icon">◎</i> 설정</a>
     <div class="sidebar-footer">
       <div class="sidebar-avatar">관</div>
       <div class="sidebar-user-info">
@@ -1079,140 +720,117 @@
     </div>
   </aside>
 
-  <!-- ── MAIN AREA ── -->
+  <!-- MAIN -->
   <main class="main-area">
-
-    <!-- TOP BAR -->
     <div class="topbar">
-      <div class="topbar-title">Contact Us 문의 관리</div>
+      <div class="topbar-title" id="topbar-title">Contact Us 문의 관리</div>
       <div class="topbar-meta" id="topbar-date"></div>
-      <button class="topbar-refresh" onclick="render()">↻ 새로고침</button>
+      <button class="topbar-refresh" id="topbar-refresh-btn" onclick="loadFromSheets()">↻ 새로고침</button>
     </div>
-
-    <!-- CONTENT -->
     <div class="content-body">
-      <div id="page-inquiry" style="display:flex;flex-direction:column;flex:1;min-height:0;gap:16px;">
 
-      <!-- STATS -->
-      <div class="stats-row">
-        <div class="stat-card accent">
-          <div class="stat-label">전체 문의</div>
-          <div class="stat-value" id="stat-total">—</div>
-          <div class="stat-delta">이번 달 +12</div>
+      <!-- 문의 관리 페이지 -->
+      <div id="page-inquiry">
+        <div class="stats-row">
+          <div class="stat-card accent"><div class="stat-label">전체 문의</div><div class="stat-value" id="stat-total">—</div><div class="stat-delta">이번 달 +12</div></div>
+          <div class="stat-card"><div class="stat-label">신규 (미처리)</div><div class="stat-value" id="stat-new">—</div><div class="stat-delta">즉시 확인 필요</div></div>
+          <div class="stat-card"><div class="stat-label">처리 중</div><div class="stat-value" id="stat-inprog">—</div><div class="stat-delta">진행 중인 건</div></div>
+          <div class="stat-card"><div class="stat-label">완료</div><div class="stat-value" id="stat-done">—</div><div class="stat-delta delta-up">이번 달 처리율 84%</div></div>
         </div>
-        <div class="stat-card">
-          <div class="stat-label">신규 (미처리)</div>
-          <div class="stat-value" id="stat-new">—</div>
-          <div class="stat-delta">즉시 확인 필요</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">처리 중</div>
-          <div class="stat-value" id="stat-inprog">—</div>
-          <div class="stat-delta">진행 중인 건</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">완료</div>
-          <div class="stat-value" id="stat-done">—</div>
-          <div class="stat-delta delta-up">이번 달 처리율 84%</div>
-        </div>
-      </div>
-
-      <!-- TOOLBAR -->
-      <div class="toolbar">
-        <div class="search-wrap">
-          <span class="search-icon">🔍</span>
-          <input
-            class="search-input"
-            id="search-input"
-            type="text"
-            placeholder="기업명, 담당자, 이메일로 검색..."
-          >
-        </div>
-        <button class="filter-btn active" data-filter="all"    onclick="setFilter('all',this)">전체</button>
-        <button class="filter-btn"        data-filter="new"    onclick="setFilter('new',this)">신규</button>
-        <button class="filter-btn"        data-filter="inprog" onclick="setFilter('inprog',this)">처리 중</button>
-        <button class="filter-btn"        data-filter="done"   onclick="setFilter('done',this)">완료</button>
-        <button class="filter-btn"        data-filter="closed" onclick="setFilter('closed',this)">종결</button>
-        <button class="export-btn" onclick="exportCSV()">↓ CSV 내보내기</button>
-      </div>
-
-      <!-- TABLE + DETAIL -->
-      <div class="table-area">
-        <div class="table-wrap">
-          <table id="inquiry-table">
-            <thead>
-              <tr>
-                <th style="width:32px; padding-left:14px;">
-                  <input type="checkbox" class="checkbox" id="chk-all" onchange="toggleAll(this)">
-                </th>
-                <th onclick="sortBy('id')" id="th-id">#</th>
-                <th onclick="sortBy('date')" id="th-date" class="sort-active">접수일 ▾</th>
-                <th onclick="sortBy('company')" id="th-company">기업명</th>
-                <th onclick="sortBy('name')" id="th-name">담당자</th>
-                <th onclick="sortBy('country')" id="th-country">국가</th>
-                <th onclick="sortBy('subject')" id="th-subject">제목</th>
-                <th onclick="sortBy('status')" id="th-status">상태</th>
-                <th id="th-email">이메일</th>
-              </tr>
-            </thead>
-            <tbody id="tbody"></tbody>
-          </table>
-          <div id="empty-state" class="empty-state" style="display:none;">
-            <div class="empty-icon">✉</div>
-            검색 결과가 없습니다.
+        <div class="toolbar">
+          <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input class="search-input" id="search-input" type="text" placeholder="기업명, 담당자, 이메일로 검색...">
           </div>
+          <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">전체</button>
+          <button class="filter-btn" data-filter="new" onclick="setFilter('new',this)">신규</button>
+          <button class="filter-btn" data-filter="inprog" onclick="setFilter('inprog',this)">처리 중</button>
+          <button class="filter-btn" data-filter="done" onclick="setFilter('done',this)">완료</button>
+          <button class="filter-btn" data-filter="closed" onclick="setFilter('closed',this)">종결</button>
+          <button class="export-btn" onclick="exportCSV()">↓ CSV 내보내기</button>
         </div>
-
-        <!-- DETAIL PANEL -->
-        <aside class="detail-panel" id="detail-panel">
-          <div class="dp-header">
-            <div style="flex:1; min-width:0;">
-              <div class="dp-id" id="dp-id"></div>
-              <div class="dp-header-title" id="dp-title"></div>
+        <div class="table-area">
+          <div class="table-wrap">
+            <table id="inquiry-table">
+              <thead>
+                <tr>
+                  <th style="width:32px;padding-left:14px;"><input type="checkbox" class="checkbox" id="chk-all" onchange="toggleAll(this)"></th>
+                  <th onclick="sortBy('id')" id="th-id">#</th>
+                  <th onclick="sortBy('date')" id="th-date" class="sort-active">접수일 ▾</th>
+                  <th onclick="sortBy('company')" id="th-company">기업명</th>
+                  <th onclick="sortBy('name')" id="th-name">담당자</th>
+                  <th onclick="sortBy('country')" id="th-country">국가</th>
+                  <th onclick="sortBy('subject')" id="th-subject">제목</th>
+                  <th onclick="sortBy('status')" id="th-status">상태</th>
+                  <th id="th-email">이메일</th>
+                </tr>
+              </thead>
+              <tbody id="tbody"></tbody>
+            </table>
+            <div id="empty-state" class="empty-state" style="display:none;">
+              <div class="empty-icon">✉</div>검색 결과가 없습니다.
             </div>
-            <button class="dp-close" onclick="closeDetail()">✕</button>
           </div>
-
-          <div class="dp-body" id="dp-body"></div>
-
-          <div class="dp-actions">
-            <div class="dp-action-label">상태 변경</div>
-            <select class="dp-status-select" id="dp-status-select" onchange="updateStatus()">
-              <option value="new">신규</option>
-              <option value="inprog">처리 중</option>
-              <option value="done">완료</option>
-              <option value="closed">종결</option>
-            </select>
-            <button class="dp-reply-btn">✉&nbsp; 이메일로 답변 발송</button>
-            <button class="dp-delete-btn">삭제</button>
-          </div>
-        </aside>
-      </div>
-
-      <!-- PAGINATION -->
-      <div class="pagination-bar">
-        <div class="pagination-info" id="pg-info"></div>
-        <div class="pagination-btns" id="pg-btns"></div>
-      </div>
-
+          <aside class="detail-panel" id="detail-panel">
+            <div class="dp-header">
+              <div style="flex:1;min-width:0;">
+                <div class="dp-id" id="dp-id"></div>
+                <div class="dp-header-title" id="dp-title"></div>
+              </div>
+              <button class="dp-close" onclick="closeDetail()">✕</button>
+            </div>
+            <div class="dp-body" id="dp-body"></div>
+            <div class="dp-actions">
+              <div class="dp-action-label">상태 변경</div>
+              <select class="dp-status-select" id="dp-status-select" onchange="updateStatus()">
+                <option value="new">신규</option>
+                <option value="inprog">처리 중</option>
+                <option value="done">완료</option>
+                <option value="closed">종결</option>
+              </select>
+              <button class="dp-reply-btn">✉&nbsp; 이메일로 답변 발송</button>
+              <button class="dp-delete-btn">삭제</button>
+            </div>
+          </aside>
+        </div>
+        <div class="pagination-bar">
+          <div class="pagination-info" id="pg-info"></div>
+          <div class="pagination-btns" id="pg-btns"></div>
+        </div>
       </div><!-- /page-inquiry -->
 
-      <!-- ── 대시보드 페이지 ── -->
+      <!-- 대시보드 페이지 -->
       <div id="page-dashboard" style="display:none;flex:1;overflow-y:auto;padding-bottom:24px;">
         <div class="db-grid">
           <div class="db-card">
             <div class="card-header"><div class="card-header-text"><div class="card-label">국가별 분포</div><div class="card-title">문의 접수 국가 Top 8</div></div></div>
-            <div class="legend-row"><span class="legend-item"><span class="legend-dot" style="background:#02227a"></span>대한민국</span><span class="legend-item"><span class="legend-dot" style="background:#11BBD1"></span>해외</span></div>
+            <div class="legend-row">
+              <span class="legend-item"><span class="legend-dot" style="background:#02227a"></span>대한민국</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#11BBD1"></span>해외</span>
+            </div>
             <div style="position:relative;width:100%;height:280px;"><canvas id="countryChart" style="cursor:pointer;"></canvas></div>
           </div>
           <div class="db-card">
             <div class="card-header"><div class="card-header-text"><div class="card-label">처리 현황</div><div class="card-title">상태별 건수</div></div></div>
             <div class="funnel-wrap" id="funnel-wrap"></div>
-            <div class="avg-badge"><div class="avg-item"><span class="avg-item-label">평균 처리 소요일</span><span class="avg-item-value">3.2일</span></div><div class="avg-divider"></div><div class="avg-item"><span class="avg-item-label">완료율</span><span class="avg-item-value">71%</span></div></div>
+            <div class="avg-badge">
+              <div class="avg-item"><span class="avg-item-label">평균 처리 소요일</span><span class="avg-item-value">3.2일</span></div>
+              <div class="avg-divider"></div>
+              <div class="avg-item"><span class="avg-item-label">완료율</span><span class="avg-item-value">71%</span></div>
+            </div>
           </div>
           <div class="db-card db-card-full">
-            <div class="card-header"><div class="card-header-text"><div class="card-label">월별 접수 추이</div><div class="card-title">최근 6개월 문의 건수</div></div><div class="period-btns"><button class="period-btn active" onclick="setPeriod(6,this)">6개월</button><button class="period-btn" onclick="setPeriod(12,this)">12개월</button></div></div>
-            <div class="legend-row"><span class="legend-item"><span class="legend-dot" style="background:#02227a;border-radius:50%"></span>전체 접수</span><span class="legend-item"><span class="legend-dot" style="background:#11BBD1;border-radius:50%"></span>완료 처리</span></div>
+            <div class="card-header">
+              <div class="card-header-text"><div class="card-label">월별 접수 추이</div><div class="card-title">최근 6개월 문의 건수</div></div>
+              <div class="period-btns">
+                <button class="period-btn active" onclick="setPeriod(6,this)">6개월</button>
+                <button class="period-btn" onclick="setPeriod(12,this)">12개월</button>
+              </div>
+            </div>
+            <div class="legend-row">
+              <span class="legend-item"><span class="legend-dot" style="background:#02227a;border-radius:50%"></span>전체 접수</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#11BBD1;border-radius:50%"></span>완료 처리</span>
+            </div>
             <div style="position:relative;width:100%;height:220px;"><canvas id="trendChart"></canvas></div>
           </div>
         </div>
@@ -1220,7 +838,7 @@
 
     </div><!-- /content-body -->
   </main>
-</div><!-- /app-shell -->
+</div><!-- /screen-admin -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
@@ -1288,7 +906,6 @@ const STATUSES = {
   done:   { label: '완료',    cls: 'done' },
   closed: { label: '종결',    cls: 'closed' },
 };
-
 let DATA = [];
 let currentFilter = 'all';
 let currentSort   = { key: 'date', asc: false };
@@ -1567,8 +1184,7 @@ function updateStatus() {
   render();
   openDetail(selectedId);
   fetch(SCRIPT_URL, {
-    method: 'POST',
-    mode: 'no-cors',
+    method: 'POST', mode: 'no-cors',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ _method: 'PATCH', id: r.id, status: newLabel }),
   }).catch(e => console.error('상태 저장 오류:', e));
@@ -1577,7 +1193,6 @@ function updateStatus() {
 /* ══ 대시보드 ══ */
 let chartsInitialized = false;
 let trendChartInstance = null;
-
 const allMonths6  = ['11월','12월','1월','2월','3월','4월'];
 const allTotal6   = [8,11,14,18,22,42];
 const allDone6    = [6,9,11,14,18,30];
@@ -1642,10 +1257,7 @@ function initDashboardCharts() {
         x: { grid: { color: gridCol }, ticks: { color: textCol, font: { size: 11 }, stepSize: 1 }, border: { display: false } },
         y: { grid: { display: false }, ticks: { color: textCol, font: { size: 12 } }, border: { display: false } },
       },
-      onClick: (evt, elements) => {
-        if (!elements.length) return;
-        navigateWithFilter('country', cL[elements[0].index]);
-      }
+      onClick: (evt, elements) => { if (!elements.length) return; navigateWithFilter('country', cL[elements[0].index]); }
     }
   });
   const fd = [
@@ -1695,9 +1307,7 @@ function setPeriod(months, btn) {
 function initAdmin() {
   document.getElementById('topbar-date').textContent =
     new Date().toLocaleDateString('ko-KR', { year:'numeric', month:'long', day:'numeric' }) + ' 기준';
-  document.getElementById('search-input').addEventListener('input', () => {
-    currentPage = 1; render();
-  });
+  document.getElementById('search-input').addEventListener('input', () => { currentPage = 1; render(); });
   loadFromSheets();
 }
 </script>
