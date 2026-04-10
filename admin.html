@@ -655,7 +655,7 @@ html,body{height:100%;font-family:'Noto Sans KR',sans-serif;background:var(--gra
         </div>
         <button class="login-btn" id="login-btn"><div class="spinner"></div><span class="btn-text">로그인</span></button>
         <div class="divider">관리자 계정이 필요하신가요?</div>
-        <div style="text-align:center;font-size:12px;color:var(--text-muted);line-height:1.7;">계정 발급은 시스템 담당자에게 문의하세요.<br><a href="mailto:nathan@nicednb.com" style="color:var(--cyan);text-decoration:none;font-weight:500;">nathan@nicednb.com</a></div>
+        <div style="text-align:center;font-size:12px;color:var(--text-muted);line-height:1.7;">계정 발급은 시스템 담당자에게 문의하세요.<br><a href="/cdn-cgi/l/email-protection#325c53465a535c725c5b5157565c501c515d5f" style="color:var(--cyan);text-decoration:none;font-weight:500;"><span class="__cf_email__" data-cfemail="9cf2fde8f4fdf2dcf2f5fff9f8f2feb2fff3f1">[email&#160;protected]</span></a></div>
         <div class="security-note"><span style="font-size:13px;">🔐</span> SSL 보안 연결로 보호됩니다</div>
       </div>
       <div class="right-footer">NICE D&amp;B ESG Admin Console v1.0</div>
@@ -687,14 +687,14 @@ html,body{height:100%;font-family:'Noto Sans KR',sans-serif;background:var(--gra
         <div class="stats-row">
           <div class="stat-card accent"><div class="stat-label">전체 문의</div><div class="stat-value" id="stat-total">—</div><div class="stat-delta">이번 달 +12</div></div>
           <div class="stat-card"><div class="stat-label">신규 (미잘리)</div><div class="stat-value" id="stat-new">—</div><div class="stat-delta">즉시 확인 필요</div></div>
-          <div class="stat-card"><div class="stat-label">잘리 중</div><div class="stat-value" id="stat-inprog">—</div><div class="stat-delta">진행 중인 건</div></div>
+          <div class="stat-card"><div class="stat-label">처리 중</div><div class="stat-value" id="stat-inprog">—</div><div class="stat-delta">진행 중인 건</div></div>
           <div class="stat-card"><div class="stat-label">완료</div><div class="stat-value" id="stat-done">—</div><div class="stat-delta delta-up">이번 달 처리율 84%</div></div>
         </div>
         <div class="toolbar">
           <div class="search-wrap"><span class="search-icon">🔍</span><input class="search-input" id="search-input" type="text" placeholder="기업명, 담당자, 이메일로 검색..."></div>
           <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">전체</button>
           <button class="filter-btn" data-filter="new" onclick="setFilter('new',this)">신규</button>
-          <button class="filter-btn" data-filter="inprog" onclick="setFilter('inprog',this)">잘리 중</button>
+          <button class="filter-btn" data-filter="inprog" onclick="setFilter('inprog',this)">처리 중</button>
           <button class="filter-btn" data-filter="done" onclick="setFilter('done',this)">완료</button>
           <button class="filter-btn" data-filter="closed" onclick="setFilter('closed',this)">종결</button>
           <button class="export-btn" onclick="exportCSV()">↓ CSV 내보내기</button>
@@ -726,7 +726,7 @@ html,body{height:100%;font-family:'Noto Sans KR',sans-serif;background:var(--gra
             <div class="dp-actions">
               <div class="dp-action-label">상태 변경</div>
               <select class="dp-status-select" id="dp-status-select" onchange="updateStatus()">
-                <option value="new">신규</option><option value="inprog">재리 중</option><option value="done">완료</option><option value="closed">종결</option>
+                <option value="new">신규</option><option value="inprog">처리 중</option><option value="done">완료</option><option value="closed">종결</option>
               </select>
               <button class="dp-reply-btn">✉&nbsp; 이메일로 답변 발송</button>
               <button class="dp-delete-btn">삭제</button>
@@ -746,11 +746,11 @@ html,body{height:100%;font-family:'Noto Sans KR',sans-serif;background:var(--gra
           <div class="db-card">
             <div class="card-header"><div class="card-header-text"><div class="card-label">재리 현황</div><div class="card-title">상태별 건수</div></div></div>
             <div class="funnel-wrap" id="funnel-wrap"></div>
-            <div class="avg-badge"><div class="avg-item"><span class="avg-item-label">평균 재리 소요일</span><span class="avg-item-value">3.2일</span></div><div class="avg-divider"></div><div class="avg-item"><span class="avg-item-label">완료율</span><span class="avg-item-value">71%</span></div></div>
+            <div class="avg-badge"><div class="avg-item"><span class="avg-item-label">완료+종결</span><span class="avg-item-value" id="avg-done-count">—</span></div><div class="avg-divider"></div><div class="avg-item"><span class="avg-item-label">완료율</span><span class="avg-item-value" id="avg-done-rate">—</span></div></div>
           </div>
           <div class="db-card db-card-full">
             <div class="card-header"><div class="card-header-text"><div class="card-label">월별 접수 추이</div><div class="card-title">최근 6개월 문의 건수</div></div><div class="period-btns"><button class="period-btn active" onclick="setPeriod(6,this)">6개월</button><button class="period-btn" onclick="setPeriod(12,this)">12개월</button></div></div>
-            <div class="legend-row"><span class="legend-item"><span class="legend-dot" style="background:#02227a;border-radius:50%"></span>전체 접수</span><span class="legend-item"><span class="legend-dot" style="background:#11BBD1;border-radius:50%"></span>완료 재리</span></div>
+            <div class="legend-row"><span class="legend-item"><span class="legend-dot" style="background:#02227a;border-radius:50%"></span>전체 접수</span><span class="legend-item"><span class="legend-dot" style="background:#11BBD1;border-radius:50%"></span>완료 처리</span></div>
             <div style="position:relative;width:100%;height:220px;"><canvas id="trendChart"></canvas></div>
           </div>
         </div>
@@ -759,11 +759,11 @@ html,body{height:100%;font-family:'Noto Sans KR',sans-serif;background:var(--gra
   </main>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbys4utZ50NC_P_3WDcMFyrodEqdahQqLybKa-gnJ5CjkBAe3XwhPJUkRfLMwOW-odAf/exec';
 const CREDENTIALS = { id: 'admin', pw: 'password' };
-const STATUSES = { new:{label:'신규',cls:'new'}, inprog:{label:'재리 중',cls:'inprog'}, done:{label:'완료',cls:'done'}, closed:{label:'종결',cls:'closed'} };
+const STATUSES = { new:{label:'신규',cls:'new'}, inprog:{label:'처리 중',cls:'inprog'}, done:{label:'완료',cls:'done'}, closed:{label:'종결',cls:'closed'} };
 let DATA = [];
 let currentFilter = 'all';
 let currentSort   = { key: 'date', asc: false };
@@ -965,7 +965,7 @@ function exportCSV() {
 
 
 function statusKeyFromLabel(label) {
-  return { '신규':'new','재리 중':'inprog','완료':'done','종결':'closed' }[label] || 'new';
+  return { '신규':'new','처리 중':'inprog','완료':'done','종결':'closed' }[label] || 'new';
 }
 
 function loadFromSheets() {
@@ -1034,11 +1034,19 @@ function initDashboardCharts() {
   const sorted=Object.entries(cc).sort((a,b)=>b[1]-a[1]).slice(0,8);
   const cL=sorted.map(e=>e[0]), cD=sorted.map(e=>e[1]), cC=cL.map(l=>l==='대한민국'?'#02227a':'#11BBD1');
   new Chart(document.getElementById('countryChart'),{type:'bar',data:{labels:cL,datasets:[{label:'문의 건수',data:cD,backgroundColor:cC,borderRadius:4,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.parsed.x}건`}}},scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11},stepSize:1},border:{display:false}},y:{grid:{display:false},ticks:{color:tc,font:{size:12}},border:{display:false}}},onClick:(evt,elements)=>{if(!elements.length)return;navigateWithFilter('country',cL[elements[0].index]);}}});
-  const fd=[{label:'신규',status:'new',count:DATA.filter(r=>r.status==='new').length,color:'#11BBD1'},{label:'재리 중',status:'inprog',count:DATA.filter(r=>r.status==='inprog').length,color:'#EF9F27'},{label:'완료',status:'done',count:DATA.filter(r=>r.status==='done').length,color:'#1D9E75'},{label:'종결',status:'closed',count:DATA.filter(r=>r.status==='closed').length,color:'#888780'}];
+  const fd=[{label:'신규',status:'new',count:DATA.filter(r=>r.status==='new').length,color:'#11BBD1'},{label:'처리 중',status:'inprog',count:DATA.filter(r=>r.status==='inprog').length,color:'#EF9F27'},{label:'완료',status:'done',count:DATA.filter(r=>r.status==='done').length,color:'#1D9E75'},{label:'종결',status:'closed',count:DATA.filter(r=>r.status==='closed').length,color:'#888780'}];
   const tot=fd.reduce((s,d)=>s+d.count,0);
   const fw=document.getElementById('funnel-wrap'); fw.innerHTML='';
   fd.forEach(d=>{const p=tot>0?Math.round(d.count/tot*100):0; fw.innerHTML+=`<div class="funnel-row funnel-row-click" onclick="navigateWithFilter('status','${d.status}')"><div class="funnel-label-group"><span class="funnel-label">${d.label}</span><span class="funnel-count">[${d.count}건]</span></div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${p}%;background:${d.color}"></div></div><span class="funnel-pct">${p}%</span></div>`;});
-  trendChartInstance=new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:allMonths6,datasets:[{label:'전체 접수',data:allTotal6,borderColor:'#02227a',backgroundColor:'rgba(2,34,122,0.08)',fill:true,tension:0.35,pointBackgroundColor:'#02227a',pointRadius:4,borderWidth:2},{label:'완료 재리',data:allDone6,borderColor:'#11BBD1',backgroundColor:'rgba(17,187,209,0.07)',fill:true,tension:0.35,pointBackgroundColor:'#11BBD1',pointRadius:4,borderWidth:2,borderDash:[5,3]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11},autoSkip:false},border:{display:false}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11},stepSize:10},border:{display:false},min:0}}}});
+  // 완료율 실시간 계산
+  const doneCount = DATA.filter(r=>r.status==='done'||r.status==='closed').length;
+  const doneRate  = tot > 0 ? Math.round(doneCount/tot*100) : 0;
+  const avgDoneEl = document.getElementById('avg-done-count');
+  const avgRateEl = document.getElementById('avg-done-rate');
+  if (avgDoneEl) avgDoneEl.textContent = doneCount + '건';
+  if (avgRateEl) avgRateEl.textContent = doneRate + '%';
+
+  trendChartInstance=new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:allMonths6,datasets:[{label:'전체 접수',data:allTotal6,borderColor:'#02227a',backgroundColor:'rgba(2,34,122,0.08)',fill:true,tension:0.35,pointBackgroundColor:'#02227a',pointRadius:4,borderWidth:2},{label:'완료 처리',data:allDone6,borderColor:'#11BBD1',backgroundColor:'rgba(17,187,209,0.07)',fill:true,tension:0.35,pointBackgroundColor:'#11BBD1',pointRadius:4,borderWidth:2,borderDash:[5,3]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11},autoSkip:false},border:{display:false}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11},stepSize:10},border:{display:false},min:0}}}});
 }
 
 function setPeriod(months,btn) {
@@ -1102,12 +1110,4 @@ document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById(id);
     el.addEventListener('input', () => {
       document.getElementById('error-msg').classList.remove('show');
-      document.getElementById('username').classList.remove('error');
-      document.getElementById('password').classList.remove('error');
-    });
-    el.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
-  });
-});
-</script>
-</body>
-</html>
+      document.getElemen
