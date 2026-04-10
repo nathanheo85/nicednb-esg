@@ -1674,11 +1674,14 @@ function handleSubmit() {
 
   fetch(SCRIPT_URL, {
     method : 'POST',
-    // Apps Script는 Content-Type: application/json 시 preflight 발생 → text/plain 사용
+    mode   : 'no-cors',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body   : JSON.stringify(data),
   })
-    .then(res => res.json())
+    .then(() => {
+      alert(m.success);
+      resetForm();
+    })
     .then(json => {
       if (json.success) {
         alert(m.success);
